@@ -6,14 +6,14 @@ async function createUser(email: string, password: string) {
   return prisma.user.create({
     data: {
       email,
-      password: hashedPassword
-    }
+      password: hashedPassword,
+    },
   });
 }
 
 async function verifyLogin(email: string, password: string) {
   const user = await prisma.user.findUnique({
-    where: { email }
+    where: { email },
   });
 
   if (!user) {

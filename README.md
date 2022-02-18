@@ -94,8 +94,14 @@ Prior to your first deployment, you'll need to do a few thing:
 
 Now that every is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
+## Formatting
+
+We use [prettier][prettier] for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode prettier plugin][vscode-prettier]) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
+
 [docker]: https://www.docker.com/get-started
 [fly_wireguard]: https://fly.io/docs/reference/private-networking/#install-your-wireguard-app
 [fly_postgres]: https://fly.io/docs/reference/postgres/
 [fly_new_access_token]: https://web.fly.io/user/personal_access_tokens/new
 [generate_password]: https://1password.com/generate-password
+[prettier]: https://prettier.io/
+[vscode-prettier]: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode

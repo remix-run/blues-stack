@@ -87,7 +87,7 @@ function Index() {
         <p>No notes yet</p>
       ) : (
         <ul>
-          {data.notes.map(note => (
+          {data.notes.map((note) => (
             <li key={note.id}>
               <h3>{note.title}</h3>
               <p>{note.body}</p>
