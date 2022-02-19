@@ -14,7 +14,7 @@
     "docker": "docker-compose up -d",
     "format": "prettier --write .",
     "lint": "eslint --cache-location ./node_modules/.cache/eslint .",
-    "typecheck": "tsc -b",
+    "typecheck": "tsc -b && tsc -b cypress",
     "test": "echo \"todo\"",
     "start:mocks": "cross-env NODE_ENV=production ENABLE_TEST_ROUTES=true node --require ./mocks --require dotenv/config ./node_modules/.bin/remix-serve build",
     "cy:run": "cypress run",
