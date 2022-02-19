@@ -3,7 +3,7 @@ import type { User } from "@prisma/client";
 import { prisma } from "~/db.server";
 
 async function createUser(email: string, password: string): Promise<User> {
-  const hashedPassword = await bcrypt.hash(password);
+  const hashedPassword = await bcrypt.hash(password, 10);
   const user = await prisma.user.create({
     data: {
       email,

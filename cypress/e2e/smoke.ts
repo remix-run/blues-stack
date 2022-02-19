@@ -7,6 +7,7 @@ describe("smoke tests", () => {
       password: faker.internet.password(),
     };
     cy.visit("/");
+    cy.findByRole("link", { name: /login/i }).click();
     cy.findByRole("link", { name: /sign up/i }).click();
     cy.findByRole("heading", { name: /join/i });
 
@@ -14,8 +15,9 @@ describe("smoke tests", () => {
     cy.findByLabelText(/password/i).type(loginForm.password);
     cy.findByRole("button", { name: /join/i }).click();
 
+    cy.findByRole("link", { name: /notes/i }).click();
     cy.findByRole("button", { name: /logout/i }).click();
-    cy.findByRole("heading", { name: /sign in/i });
+    cy.findByRole("link", { name: /login/i });
   });
 
   it("should allow you to make a note", () => {
@@ -25,6 +27,7 @@ describe("smoke tests", () => {
     };
     cy.login().then((u) => console.log(u));
 
+    cy.findByRole("link", { name: /notes/i }).click();
     cy.findByText("No notes yet");
 
     cy.findByRole("textbox", { name: /title/i }).type(testNote.title);

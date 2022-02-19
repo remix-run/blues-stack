@@ -1,4 +1,5 @@
 import {
+  json,
   Links,
   LiveReload,
   Meta,
@@ -6,12 +7,27 @@ import {
   Scripts,
   ScrollRestoration,
 } from "remix";
-import type { LinksFunction } from "remix";
+import type { LinksFunction, MetaFunction, LoaderFunction } from "remix";
 
 import appStyles from "./styles/app.css";
+import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: appStyles }];
+};
+
+export const meta: MetaFunction = () => {
+  return { title: "Remix Notes" };
+};
+
+type LoaderData = {
+  user: Awaited<ReturnType<typeof getUser>>;
+};
+
+export let loader: LoaderFunction = async ({ request }) => {
+  return json<LoaderData>({
+    user: await getUser(request),
+  });
 };
 
 export default function App() {

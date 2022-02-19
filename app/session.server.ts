@@ -1,9 +1,10 @@
 import { createCookieSessionStorage, redirect } from "remix";
 import invariant from "tiny-invariant";
+import { prisma } from "./db.server";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 
-const sessionStorage = createCookieSessionStorage({
+export const sessionStorage = createCookieSessionStorage({
   cookie: {
     name: "__session",
     httpOnly: true,
@@ -17,17 +18,25 @@ const sessionStorage = createCookieSessionStorage({
 
 const USER_SESSION_KEY = "userId";
 
-async function getSession(request: Request) {
-  return sessionStorage.getSession(request.headers.get("Cookie"));
+export async function getSession(request: Request) {
+  const cookie = request.headers.get("Cookie");
+  console.log({ cookie });
+  return sessionStorage.getSession(cookie);
 }
 
-async function getUserId(request: Request) {
+export async function getUserId(request: Request) {
   const session = await getSession(request);
   const userId = session.get(USER_SESSION_KEY);
   return userId;
 }
 
-async function requireUserId(
+export async function getUser(request: Request) {
+  const userId = await getUserId(request);
+  if (!userId) return null;
+  return prisma.user.findUnique({ where: { id: userId } });
+}
+
+export async function requireUserId(
   request: Request,
   redirectTo: string = new URL(request.url).pathname
 ) {
@@ -39,7 +48,12 @@ async function requireUserId(
   return userId;
 }
 
-async function createUserSession(
+export async function requireUser(request: Request) {
+  const userId = await requireUserId(request);
+  return prisma.user.findUnique({ where: { id: userId } });
+}
+
+export async function createUserSession(
   request: Request,
   userId: string,
   redirectTo: string
@@ -53,20 +67,11 @@ async function createUserSession(
   });
 }
 
-async function logout(request: Request) {
+export async function logout(request: Request) {
   const session = await getSession(request);
-  return redirect("/login", {
+  return redirect("/", {
     headers: {
       "Set-Cookie": await sessionStorage.destroySession(session),
     },
   });
 }
-
-export {
-  sessionStorage,
-  getSession,
-  getUserId,
-  requireUserId,
-  createUserSession,
-  logout,
-};
