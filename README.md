@@ -65,8 +65,8 @@ Prior to your first deployment, you'll need to do a few thing:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly create [YOUR_APP_NAME]-staging
-  fly create [YOUR_APP_NAME]
+  fly create fly-stack-template-app-name-staging
+  fly create fly-stack-template-app-name
   ```
 
 - Make sure you have a `FLY_API_TOKEN` added to your GitHub repo, to do this, go to your user settings on Fly and create a new [token][fly_new_access_token], then add it to your repo secrets with the name `FLY_API_TOKEN`. Finally you'll need to add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
@@ -78,7 +78,7 @@ Prior to your first deployment, you'll need to do a few thing:
 
   If you don't have openssl installed, you can also use [1password][generate_password] to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
-- Create a database for both your staging and production environments. Run the following for both of your environments and follow the prompts (your App name is "[YOUR_APP_NAME]-db"):
+- Create a database for both your staging and production environments. Run the following for both of your environments and follow the prompts (your App name is "fly-stack-template-app-name-db"):
 
   ```sh
   fly postgres create
@@ -87,7 +87,7 @@ Prior to your first deployment, you'll need to do a few thing:
   afterwards, you'll need to connect your database to each of your apps
 
   ```sh
-  fly postgres attach --postgres-app [YOUR_APP_NAME]-db --app [YOUR_APP_NAME]
+  fly postgres attach --postgres-app fly-stack-template-app-name-db --app fly-stack-template-app-name
   ```
 
   Fly will take care of setting the DATABASE_URL secret for you.
