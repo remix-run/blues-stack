@@ -16,7 +16,7 @@
     "lint": "eslint --cache-location ./node_modules/.cache/eslint .",
     "typecheck": "tsc -b && tsc -b cypress",
     "test": "echo \"todo\"",
-    "start:mocks": "cross-env NODE_ENV=production ENABLE_TEST_ROUTES=true node --require ./mocks --require dotenv/config ./node_modules/.bin/remix-serve build",
+    "start:mocks": "cross-env NODE_ENV=production node --require ./mocks --require dotenv/config ./node_modules/.bin/remix-serve build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test:e2e:dev": "start-server-and-test dev http-get://localhost:3000 cy:open",
