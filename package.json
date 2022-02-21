@@ -32,7 +32,7 @@
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-alpha.6",
+    "@faker-js/faker": "^6.0.0-alpha.7",
     "@remix-run/dev": "*",
     "@remix-run/eslint-config": "*",
     "@testing-library/cypress": "^8.0.2",
@@ -45,11 +45,11 @@
     "esbuild": "^0.14.23",
     "esbuild-register": "^3.3.2",
     "eslint": "^8.9.0",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-jest": "^26.1.1",
     "eslint-plugin-jest-dom": "^4.0.1",
     "eslint-plugin-testing-library": "^5.0.5",
-    "msw": "^0.36.8",
+    "msw": "^0.38.1",
     "prettier": "^2.5.1",
     "prisma": "^3.9.2",
     "start-server-and-test": "^1.14.0",
