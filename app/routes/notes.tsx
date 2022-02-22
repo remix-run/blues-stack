@@ -84,7 +84,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Notes() {
   const location = useLocation();
-  const data = LoaderData.parse(useLoaderData());
+  const data = useLoaderData<LoaderData>();
   const actionData = useActionData<ActionData>();
   const titleRef = React.useRef<HTMLInputElement>(null);
   const bodyRef = React.useRef<HTMLTextAreaElement>(null);
