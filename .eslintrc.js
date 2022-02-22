@@ -26,6 +26,11 @@ const testingLibraryRules = {
  */
 module.exports = {
   extends: ["@remix-run/eslint-config", "prettier"],
+  rules: {
+    // having a type the same name as a variable is totally fine
+    "@typescript-eslint/no-redeclare": "off",
+    "@typescript-eslint/consistent-type-imports": "error",
+  },
   overrides: [
     {
       files: ["**/*.test.{js,jsx,ts,tsx}"],
@@ -33,6 +38,11 @@ module.exports = {
         "jest/globals": true,
       },
       plugins: ["jest-dom", "jest", "testing-library"],
+      settings: {
+        jest: {
+          version: 27,
+        },
+      },
       rules: {
         "jest/no-conditional-expect": "error",
         "jest/no-deprecated-functions": "error",
@@ -74,5 +84,4 @@ module.exports = {
       },
     },
   ],
-  rules: {},
 };

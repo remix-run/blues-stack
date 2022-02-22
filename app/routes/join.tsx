@@ -12,7 +12,8 @@ import Alert from "@reach/alert";
 
 import { getUserId, createUserSession } from "~/session.server";
 
-import { createUser } from "~/models/user.server";
+import { createUser, getUserByEmail } from "~/models/user.server";
+import { validateEmail } from "~/utils";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -31,11 +32,11 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const returnTo = formData.get("returnTo");
+  const redirectTo = formData.get("redirectTo");
 
-  if (typeof email !== "string" || email.length === 0) {
+  if (!validateEmail(email)) {
     return json<ActionData>(
-      { errors: { email: "Email is required" } },
+      { errors: { email: "Email is invalid" } },
       { status: 400 }
     );
   }
@@ -47,19 +48,20 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const user = await createUser(email, password);
-
-  if (!user) {
+  const existingUser = await getUserByEmail(email);
+  if (existingUser) {
     return json<ActionData>(
-      { errors: { email: "Invalid email or password" } },
+      { errors: { email: "A user already exists with this email" } },
       { status: 400 }
     );
   }
 
+  const user = await createUser(email, password);
+
   return createUserSession(
     request,
     user.id,
-    typeof returnTo === "string" ? returnTo : "/"
+    typeof redirectTo === "string" ? redirectTo : "/"
   );
 };
 
@@ -71,7 +73,7 @@ export const meta: MetaFunction = () => {
 
 export default function JoinPage() {
   const [searchParams] = useSearchParams();
-  const returnTo = searchParams.get("redirectTo") ?? undefined;
+  const redirectTo = searchParams.get("redirectTo") ?? undefined;
   const actionData = useActionData<ActionData>();
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
@@ -91,7 +93,7 @@ export default function JoinPage() {
         method="post"
         style={{ display: "flex", flexDirection: "column", gap: 8 }}
       >
-        <input type="hidden" name="redirectTo" value={returnTo} />
+        <input type="hidden" name="redirectTo" value={redirectTo} />
         <div>
           <label>
             <span>Email address</span>
@@ -144,7 +146,7 @@ export default function JoinPage() {
         <Link
           to={{
             pathname: "/login",
-            search: returnTo ? `?returnTo=${returnTo}` : undefined,
+            search: redirectTo ? `?redirectTo=${redirectTo}` : undefined,
           }}
         >
           Log in

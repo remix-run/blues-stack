@@ -12,6 +12,7 @@ import Alert from "@reach/alert";
 
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
+import { validateEmail } from "~/utils";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -30,11 +31,11 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const returnTo = formData.get("returnTo");
+  const redirectTo = formData.get("redirectTo");
 
-  if (typeof email !== "string" || email.length === 0) {
+  if (!validateEmail(email)) {
     return json<ActionData>(
-      { errors: { email: "Email is required" } },
+      { errors: { email: "Email is invalid" } },
       { status: 400 }
     );
   }
@@ -58,7 +59,7 @@ export const action: ActionFunction = async ({ request }) => {
   return createUserSession(
     request,
     user.id,
-    typeof returnTo === "string" ? returnTo : "/"
+    typeof redirectTo === "string" ? redirectTo : "/"
   );
 };
 
@@ -70,7 +71,7 @@ export const meta: MetaFunction = () => {
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams();
-  const returnTo = searchParams.get("redirectTo") ?? undefined;
+  const redirectTo = searchParams.get("redirectTo") ?? undefined;
   const actionData = useActionData<ActionData>();
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
@@ -90,7 +91,7 @@ export default function LoginPage() {
         method="post"
         style={{ display: "flex", flexDirection: "column", gap: 8 }}
       >
-        <input type="hidden" name="redirectTo" value={returnTo} />
+        <input type="hidden" name="redirectTo" value={redirectTo} />
         <div>
           <label>
             <span>Email address</span>
@@ -142,7 +143,7 @@ export default function LoginPage() {
         <Link
           to={{
             pathname: "/join",
-            search: returnTo ? `?returnTo=${returnTo}` : undefined,
+            search: redirectTo ? `?redirectTo=${redirectTo}` : undefined,
           }}
         >
           Sign up

@@ -1,0 +1,7 @@
+/node_modules
+/build
+/public/build
+/postgres-data
+.env
+/cypress/screenshots
+/cypress/videos
