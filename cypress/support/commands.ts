@@ -14,6 +14,18 @@ declare global {
        *    cy.login({ email: 'whatever@example.com' })
        */
       login: typeof login;
+
+      /**
+       * Deletes the current @user
+       *
+       * @returns {typeof cleanupUser}
+       * @memberof Chainable
+       * @example
+       *    cy.cleanupUser()
+       * @example
+       *    cy.cleanupUser({ email: 'whatever@example.com' })
+       */
+      cleanupUser: typeof cleanupUser;
     }
   }
 }
@@ -23,14 +35,37 @@ function login({
 }: {
   email?: string;
 } = {}) {
-  const query = new URLSearchParams();
-  query.set("email", email);
   cy.then(() => ({ email })).as("user");
-  cy.visit(`/__tests/login?${query.toString()}`);
+  cy.exec(
+    `node --require esbuild-register ./cypress/support/create-user.ts "${email}"`
+  ).then(({ stdout }) => {
+    cy.setCookie("__session", stdout.trim());
+  });
   return cy.get("@user");
 }
 
+function cleanupUser({ email }: { email?: string } = {}) {
+  if (email) {
+    deleteUserByEmail(email);
+  } else {
+    cy.get("@user").then((user) => {
+      const email = (user as { email?: string }).email;
+      if (email) {
+        deleteUserByEmail(email);
+      }
+    });
+  }
+}
+
+function deleteUserByEmail(email: string) {
+  cy.exec(
+    `node --require esbuild-register ./cypress/support/delete-user.ts "${email}"`
+  );
+  cy.clearCookie("__session");
+}
+
 Cypress.Commands.add("login", login);
+Cypress.Commands.add("cleanupUser", cleanupUser);
 
 /*
 eslint

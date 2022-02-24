@@ -1,11 +1,17 @@
 import faker from "@faker-js/faker";
 
 describe("smoke tests", () => {
+  afterEach(() => {
+    cy.cleanupUser();
+  });
+
   it("should allow you to register and login", () => {
     const loginForm = {
-      email: faker.internet.email(),
+      email: `${faker.internet.userName()}@example.com`,
       password: faker.internet.password(),
     };
+    cy.then(() => ({ email: loginForm.email })).as("user");
+
     cy.visit("/");
     cy.findByRole("link", { name: /login/i }).click();
     cy.findByRole("link", { name: /sign up/i }).click();
@@ -25,7 +31,8 @@ describe("smoke tests", () => {
       title: faker.lorem.words(1),
       body: faker.lorem.sentences(1),
     };
-    cy.login().then((u) => console.log(u));
+    cy.login();
+    cy.visit("/");
 
     cy.findByRole("link", { name: /notes/i }).click();
     cy.findByText("No notes yet");

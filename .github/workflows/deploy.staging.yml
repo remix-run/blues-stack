@@ -1,8 +1,8 @@
-name: 🚀 Deploy Staging
+name: 🚀 Deploy Production
 on:
   push:
     branches:
-      - dev
+      - main
   pull_request: {}
 
 jobs:
@@ -92,8 +92,6 @@ jobs:
 
       - name: ⚙️ Build
         run: npm run build
-        env:
-          ENABLE_TEST_ROUTES: true
 
       - name: 🐳 Docker compose
         run: docker-compose up -d && sleep 3 && npx prisma migrate reset --force
@@ -102,7 +100,6 @@ jobs:
 
       - name: 🌳 Cypress run
         uses: cypress-io/github-action@v2
-        continue-on-error: false
         with:
           start: npm run start:mocks
           wait-on: "http://localhost:8811"
@@ -178,7 +175,6 @@ jobs:
       - name: 🚀 Deploy
         uses: superfly/flyctl-actions@1.1
         with:
-          args: "deploy --config ./fly.staging.toml --image registry.fly.io/fly-stack-template-app-name-staging:${{ github.sha }}"
-
+          args: "deploy --config ./fly.production.toml --image registry.fly.io/fly-stack-template-app-name-staging:${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

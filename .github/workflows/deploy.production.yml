@@ -92,8 +92,6 @@ jobs:
 
       - name: ⚙️ Build
         run: npm run build
-        env:
-          ENABLE_TEST_ROUTES: true
 
       - name: 🐳 Docker compose
         run: docker-compose up -d && sleep 3 && npx prisma migrate reset --force
@@ -102,7 +100,6 @@ jobs:
 
       - name: 🌳 Cypress run
         uses: cypress-io/github-action@v2
-        continue-on-error: false
         with:
           start: npm run start:mocks
           wait-on: "http://localhost:8811"

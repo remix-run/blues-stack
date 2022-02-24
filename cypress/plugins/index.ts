@@ -12,5 +12,14 @@ module.exports = (
   };
   Object.assign(config, configOverrides);
 
+  // To use this:
+  // cy.task('log', whateverYouWantInTheTerminal)
+  on("task", {
+    log(message) {
+      console.log(message);
+      return null;
+    },
+  });
+
   return config;
 };

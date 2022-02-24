@@ -17,8 +17,8 @@
     "typecheck": "tsc -b && tsc -b cypress",
     "test": "vitest",
     "start:mocks": "cross-env NODE_ENV=production node --require ./mocks --require dotenv/config ./node_modules/.bin/remix-serve build",
-    "test:e2e:dev": "start-server-and-test dev http-get://localhost:3000 'cypress open'",
-    "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http-get://localhost:8811 'cypress run'"
+    "test:e2e:dev": "start-server-and-test dev http://localhost:3000 'cypress open'",
+    "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 'cypress run'"
   },
   "dependencies": {
     "@node-rs/bcrypt": "^1.6.0",
