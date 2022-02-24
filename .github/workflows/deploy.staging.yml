@@ -1,8 +1,8 @@
-name: 🚀 Deploy Production
+name: 🚀 Deploy Staging
 on:
   push:
     branches:
-      - main
+      - dev
   pull_request: {}
 
 jobs:
