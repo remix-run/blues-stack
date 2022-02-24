@@ -66,5 +66,11 @@
   "engines": {
     "node": ">=14"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "prettier": {},
+  "eslintIgnore": [
+    "/node_modules",
+    "/build",
+    "/public/build"
+  ]
 }
