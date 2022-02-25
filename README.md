@@ -18,7 +18,7 @@ flyctl auth signup
 
 ## The Database
 
-In development, it's better to use a local database, The easiest way to do this is using [Docker][docker]. To start your postgres database, first make sure you have docker running, then run the following command:
+In development, it's better to use a local database, The easiest way to do this is using [Docker](https://www.docker.com/get-started). To start your postgres database, first make sure you have docker running, then run the following command:
 
 ```sh
 docker-compose up
@@ -34,7 +34,7 @@ When this finishes successfully, it will say:
 
 > "All migrations have been successfully applied."
 
-If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here][fly_wireguard], and the instructions for creating a development database [here][fly_postgres].
+If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
 
 ## Development
 
@@ -69,14 +69,14 @@ Prior to your first deployment, you'll need to do a few thing:
   fly create fly-stack-template-app-name
   ```
 
-- Make sure you have a `FLY_API_TOKEN` added to your GitHub repo, to do this, go to your user settings on Fly and create a new [token][fly_new_access_token], then add it to your repo secrets with the name `FLY_API_TOKEN`. Finally you'll need to add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
+- Make sure you have a `FLY_API_TOKEN` added to your GitHub repo, to do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`. Finally you'll need to add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
   fly secrets set SESSION_SECRET=$(openssl rand -hex 32) -c fly.staging.toml
   fly secrets set SESSION_SECRET=$(openssl rand -hex 32) -c fly.production.toml
   ```
 
-  If you don't have openssl installed, you can also use [1password][generate_password] to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
+  If you don't have openssl installed, you can also use [1password](https://1password.com/generate-password) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
 - Create a database for both your staging and production environments. Run the following for both of your environments and follow the prompts (your App name is "fly-stack-template-app-name-db"):
 
@@ -100,7 +100,7 @@ Now that every is set up you can commit and push your changes to your repo. Ever
 
 We use Cypress for our End-to-End tests in this project. You'll find those in the `cypress` directory. As you make changes, add to an existing file or create a new file in the `cypress/e2e` directory to test your changes.
 
-We use [`@testing-library/cypress`][cypress-testing-library] for selecting elements on the page semantically.
+We use [`@testing-library/cypress`](https://testing-library.com/cypress) for selecting elements on the page semantically.
 
 To run these tests in development, run `npm run test:e2e:dev` which will start the dev server for the app as well as the Cypress client. Make sure the database is running in docker as described above.
 
@@ -123,7 +123,7 @@ That way, we can keep your local db clean.
 
 ### Vitest
 
-For lower level tests of utilities and individual components, we use `vitest`. We have DOM-specific assertion helpers via [`@testing-library/jest-dom`][jest-dom].
+For lower level tests of utilities and individual components, we use `vitest`. We have DOM-specific assertion helpers via [`@testing-library/jest-dom`](https://testing-library.com/jest-dom).
 
 ### Type Checking
 
@@ -135,14 +135,4 @@ This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 
 ### Formatting
 
-We use [prettier][prettier] for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode prettier plugin][vscode-prettier]) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
-
-[docker]: https://www.docker.com/get-started
-[fly_wireguard]: https://fly.io/docs/reference/private-networking/#install-your-wireguard-app
-[fly_postgres]: https://fly.io/docs/reference/postgres/
-[fly_new_access_token]: https://web.fly.io/user/personal_access_tokens/new
-[generate_password]: https://1password.com/generate-password
-[prettier]: https://prettier.io/
-[vscode-prettier]: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
-[cypress-testing-library]: https://testing-library.com/cypress
-[jest-dom]: https://testing-library.com/jest-dom
+We use [prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
