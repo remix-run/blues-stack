@@ -1,10 +1,20 @@
-# Remix Fly Stack
+# Remix Foo Fighters Stack
 
 - [Remix Docs](https://remix.run/docs)
 
-## Before you get started
+## What's in the stack
 
-Note apps on Fly require a globally unique name, we've used the name of the current directory, plus 4 random characters, you can change this at anytime BEFORE you deploy.
+- Multi-region Fly app deployment with Docker
+- Multi-region Fly PostgreSQL Cluster
+- GitHub Actions for deploy on merge
+- Email/Password Authentication with cookie-based sessions
+- Database ORM with Prisma
+- E2E testing with Cypress
+- Local third party request mocking with MSW
+- Unit testing with Vitest
+- Code formatting with prettier
+- Linting with ESLint
+- Static Types with TypeScript
 
 ## Fly Setup
 
@@ -93,6 +103,16 @@ Prior to your first deployment, you'll need to do a few thing:
   Fly will take care of setting the DATABASE_URL secret for you.
 
 Now that every is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
+
+### Multi-region deploys
+
+Once you have your site and database running in a single region, you can add more regions by following [Fly's Scaling](https://fly.io/docs/reference/scaling/) and [Multi-region PostgreSQL](https://fly.io/docs/getting-started/multi-region-databases/) docs.
+
+Make certain to set a `PRIMARY_REGION` environment variable for your app. You can use `[env]` config in the `fly.production.toml` to set that to the region you want to use as the primary region for both your app and database.
+
+#### Testing your app in other regions
+
+Install the [ModHeader](https://modheader.com/) browser extension (or something similar) and use it to load your app with the header `fly-prefer-region` set to the region name you would like to test.
 
 ## GitHub Actions
 
