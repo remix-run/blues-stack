@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Form, json, redirect, useLocation, useActionData } from "remix";
+import { Form, json, redirect, useActionData } from "remix";
 import type { ActionFunction } from "remix";
 import Alert from "@reach/alert";
 
