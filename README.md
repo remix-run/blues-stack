@@ -114,6 +114,8 @@ Make certain to set a `PRIMARY_REGION` environment variable for your app. You ca
 
 Install the [ModHeader](https://modheader.com/) browser extension (or something similar) and use it to load your app with the header `fly-prefer-region` set to the region name you would like to test.
 
+You can check the `x-fly-region` header on the response to know which region your request was handled by.
+
 ## GitHub Actions
 
 We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.

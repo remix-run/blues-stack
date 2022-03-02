@@ -7,6 +7,11 @@ import * as serverBuild from "@remix-run/dev/server-build";
 
 const app = express();
 
+app.all("*", (req, res, next) => {
+  res.set("x-fly-region", process.env.FLY_REGION ?? "unknown");
+  next();
+});
+
 // if we're not in the primary region, then we need to make sure all
 // non-GET/HEAD/OPTIONS requests hit the primary region rather than read-only
 // Postgres DBs.
