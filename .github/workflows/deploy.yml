@@ -150,7 +150,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: registry.fly.io/${{ steps.app_name.outputs.value }}-${{ github.ref_name }}:${{ github.sha }}
+          tags: registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}
           build-args: |
             COMMIT_SHA=${{ github.sha }}
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -191,7 +191,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: superfly/flyctl-actions@1.1
         with:
-          args: "deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}-${{ github.ref_name }}:${{ github.sha }}"
+          args: "deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -199,6 +199,6 @@ jobs:
         if: ${{ github.ref == 'refs/heads/dev' }}
         uses: superfly/flyctl-actions@1.1
         with:
-          args: "deploy --app ${{ steps.app_name.outputs.value }}-staging --image registry.fly.io/${{ steps.app_name.outputs.value }}-${{ github.ref_name }}:${{ github.sha }}"
+          args: "deploy --app ${{ steps.app_name.outputs.value }}-staging --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
