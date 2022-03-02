@@ -1,6 +1,20 @@
 import { prisma } from "~/db.server";
 
-function createNote(title: string, body: string, userId: string) {
+export function getNote(userId: string, id: string) {
+  return prisma.note.findFirst({
+    where: { id, userId },
+  });
+}
+
+export function getNoteListItems(userId: string) {
+  return prisma.note.findMany({
+    where: { userId: userId },
+    select: { id: true, title: true },
+    orderBy: { updatedAt: "desc" },
+  });
+}
+
+export function createNote(title: string, body: string, userId: string) {
   return prisma.note.create({
     data: {
       title,
@@ -14,10 +28,10 @@ function createNote(title: string, body: string, userId: string) {
   });
 }
 
-function deleteNote(id: string) {
-  return prisma.note.delete({
-    where: { id },
+export function deleteNote(userId: string, id: string) {
+  return prisma.note.deleteMany({
+    where: { id, userId },
   });
 }
 
-export { createNote, deleteNote };
+export type { Note } from "@prisma/client";

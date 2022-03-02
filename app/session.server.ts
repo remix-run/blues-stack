@@ -1,6 +1,6 @@
 import { createCookieSessionStorage, redirect } from "remix";
 import invariant from "tiny-invariant";
-import { prisma } from "./db.server";
+import { getUserById } from "./models/user.server";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 
@@ -32,7 +32,7 @@ export async function getUserId(request: Request) {
 export async function getUser(request: Request) {
   const userId = await getUserId(request);
   if (!userId) return null;
-  return prisma.user.findUnique({ where: { id: userId } });
+  return getUserById(userId);
 }
 
 export async function requireUserId(
@@ -49,7 +49,7 @@ export async function requireUserId(
 
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
-  return prisma.user.findUnique({ where: { id: userId } });
+  return getUserById(userId);
 }
 
 export async function createUserSession(

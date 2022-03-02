@@ -87,18 +87,38 @@ export default function JoinPage() {
   }, [actionData]);
 
   return (
-    <>
-      <h1>Join</h1>
+    <div
+      style={{
+        maxWidth: 500,
+        margin: "30vh auto 0 auto",
+      }}
+    >
+      <h1 style={{ textAlign: "center" }}>Join Remix Notes</h1>
       <Form
         method="post"
-        style={{ display: "flex", flexDirection: "column", gap: 8 }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+          width: 300,
+          margin: "auto",
+        }}
       >
         <input type="hidden" name="redirectTo" value={redirectTo} />
         <div>
-          <label>
+          <label
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
+              width: "100%",
+            }}
+          >
             <span>Email address</span>
             <input
               ref={emailRef}
+              autoFocus={true}
+              style={{ flex: 1, lineHeight: 2, fontSize: "1.1rem" }}
               name="email"
               type="email"
               autoComplete="email"
@@ -116,10 +136,18 @@ export default function JoinPage() {
         </div>
 
         <div>
-          <label>
+          <label
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
+              width: "100%",
+            }}
+          >
             <span>Password</span>
             <input
               ref={passwordRef}
+              style={{ flex: 1, lineHeight: 2, fontSize: "1.1rem" }}
               name="password"
               type="password"
               autoComplete="new-password"
@@ -136,12 +164,12 @@ export default function JoinPage() {
           )}
         </div>
 
-        <div>
+        <div style={{ textAlign: "right" }}>
           <button type="submit">Join</button>
         </div>
       </Form>
 
-      <div style={{ paddingTop: 8 }}>
+      <div style={{ paddingTop: 24, textAlign: "right" }}>
         Already have an account?{" "}
         <Link
           to={{
@@ -152,6 +180,6 @@ export default function JoinPage() {
           Log in
         </Link>
       </div>
-    </>
+    </div>
   );
 }
