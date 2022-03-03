@@ -42,9 +42,19 @@ npx prisma migrate deploy
 
 When this finishes successfully, it will say:
 
-> "All migrations have been successfully applied."
+> All migrations have been successfully applied.
 
 If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
+
+## Build
+
+To run the production build for the app, run the following script:
+
+```sh
+npm run build
+```
+
+This should take less than a second ⚡
 
 ## Development
 
@@ -82,22 +92,20 @@ Prior to your first deployment, you'll need to do a few thing:
 - Make sure you have a `FLY_API_TOKEN` added to your GitHub repo, to do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`. Finally you'll need to add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) -c fly.staging.toml
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) -c fly.production.toml
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app fly-stack-template-app-name-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app fly-stack-template-app-name
   ```
 
   If you don't have openssl installed, you can also use [1password](https://1password.com/generate-password) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
-- Create a database for both your staging and production environments. Run the following for both of your environments and follow the prompts (your App name is "fly-stack-template-app-name-db"):
+- Create a database for both your staging and production environments. Run the following:
 
   ```sh
-  fly postgres create
-  ```
-
-  afterwards, you'll need to connect your database to each of your apps
-
-  ```sh
+  fly postgres create --name fly-stack-template-app-name-db
   fly postgres attach --postgres-app fly-stack-template-app-name-db --app fly-stack-template-app-name
+
+  fly postgres create --name fly-stack-template-app-name-staging-db
+  fly postgres attach --postgres-app fly-stack-template-app-name-staging-db --app fly-stack-template-app-name-staging
   ```
 
   Fly will take care of setting the DATABASE_URL secret for you.
@@ -108,7 +116,7 @@ Now that every is set up you can commit and push your changes to your repo. Ever
 
 Once you have your site and database running in a single region, you can add more regions by following [Fly's Scaling](https://fly.io/docs/reference/scaling/) and [Multi-region PostgreSQL](https://fly.io/docs/getting-started/multi-region-databases/) docs.
 
-Make certain to set a `PRIMARY_REGION` environment variable for your app. You can use `[env]` config in the `fly.production.toml` to set that to the region you want to use as the primary region for both your app and database.
+Make certain to set a `PRIMARY_REGION` environment variable for your app. You can use `[env]` config in the `fly.toml` to set that to the region you want to use as the primary region for both your app and database.
 
 #### Testing your app in other regions
 
