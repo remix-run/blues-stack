@@ -18,7 +18,7 @@ async function main() {
   const EXAMPLE_ENV_PATH = path.join(__dirname, "../.env.example");
   const ENV_PATH = path.join(__dirname, "../.env");
 
-  const REPLACER = "fly-stack-template-app-name";
+  const REPLACER = "blues-stack-template";
 
   const DIR_NAME = path.basename(path.resolve(__dirname, ".."));
   const SUFFIX = getRandomString(2);

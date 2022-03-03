@@ -1,4 +1,4 @@
-app = "fly-stack-template-app-name"
+app = "blues-stack-template"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
