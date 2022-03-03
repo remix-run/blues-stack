@@ -1,20 +1,21 @@
-# Remix Foo Fighters Stack
+# Remix Blues Stack
 
-- [Remix Docs](https://remix.run/docs)
+Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ## What's in the stack
 
-- Multi-region Fly app deployment with Docker
-- Multi-region Fly PostgreSQL Cluster
-- GitHub Actions for deploy on merge
-- Email/Password Authentication with cookie-based sessions
-- Database ORM with Prisma
-- E2E testing with Cypress
-- Local third party request mocking with MSW
-- Unit testing with Vitest
-- Code formatting with prettier
-- Linting with ESLint
-- Static Types with TypeScript
+- [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
+- [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
+- Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
+- [GitHub Actions](https://github.com/features/actions) for deploy on merge to production and staging environments
+- Email/Password Authentication with [cookie-based sessions](https://remix.run/docs/en/v1/api/remix#createcookiesessionstorage)
+- Database ORM with [Prisma](https://prisma.io)
+- End-to-end testing with [Cypress](https://cypress.io)
+- Local third party request mocking with [MSW](https://mswjs.io)
+- Unit testing with [Vitest](https://vitest.dev)
+- Code formatting with [prettier](https://prettier.io)
+- Linting with [ESLint](https://eslint.org)
+- Static Types with [TypeScript](https://typescriptlang.org)
 
 ## Fly Setup
 
