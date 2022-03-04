@@ -86,15 +86,15 @@ Prior to your first deployment, you'll need to do a few thing:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly create blues-stack-template-staging
   fly create blues-stack-template
+  fly create blues-stack-template-staging
   ```
 
 - Make sure you have a `FLY_API_TOKEN` added to your GitHub repo, to do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`. Finally you'll need to add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blues-stack-template-staging
   fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blues-stack-template
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blues-stack-template-staging
   ```
 
   If you don't have openssl installed, you can also use [1password](https://1password.com/generate-password) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
