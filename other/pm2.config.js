@@ -1,3 +1,7 @@
+const env = {
+  NODE_ENV: process.env.NODE_ENV ?? "development",
+  FORCE_COLOR: "1",
+};
 module.exports = {
   apps: [
     {
@@ -12,19 +16,27 @@ module.exports = {
         .filter(Boolean)
         .join(" "),
       watch: ["./mocks/**/*.ts", "./build/server.js", "./.env"],
-      env: {
-        NODE_ENV: process.env.NODE_ENV ?? "development",
-        FORCE_COLOR: "1",
-      },
+      env,
+    },
+    {
+      name: "Server Build",
+      script: "npm run build:server -- --watch",
+      // watch: ["./server.ts"],
+      ignore_watch: ["."],
+      env,
     },
     {
       name: "Remix",
       script: "remix watch",
       ignore_watch: ["."],
-      env: {
-        NODE_ENV: process.env.NODE_ENV ?? "development",
-        FORCE_COLOR: "1",
-      },
+      env,
+    },
+    {
+      name: "Tailwind",
+      script: "npm run generate:css -- --watch",
+      autorestart: false,
+      ignore_watch: ["."],
+      env,
     },
   ],
 };
