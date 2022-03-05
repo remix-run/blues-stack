@@ -21,7 +21,6 @@ module.exports = {
     {
       name: "Server Build",
       script: "npm run build:server -- --watch",
-      // watch: ["./server.ts"],
       ignore_watch: ["."],
       env,
     },
