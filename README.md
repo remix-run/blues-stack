@@ -50,6 +50,16 @@ When this finishes successfully, it will say:
 
 If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
 
+## Build
+
+To run the production build for the app, run the following script:
+
+```sh
+npm run build
+```
+
+This should take less than a second ⚡
+
 ## Development
 
 With your postgres database up and running in one tab and setup with tables for your data model via prisma, you're ready to start the dev server. Run this in a new tab in your terminal:
