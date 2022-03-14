@@ -33,19 +33,23 @@ export const action: ActionFunction = async ({ request }) => {
   const redirectTo = formData.get("redirectTo");
   const remember = formData.get("remember");
 
-  const validEmail = validateEmail(email);
-  const validPassword = typeof password === "string" && password.length >= 8;
-
-  if (!validEmail || !validPassword) {
+  if (!validateEmail(email)) {
     return json<ActionData>(
-      {
-        errors: {
-          email: validEmail ? undefined : "Invalid email",
-          password: validPassword
-            ? undefined
-            : "Password must be at least 8 characters long",
-        },
-      },
+      { errors: { email: "Email is invalid" } },
+      { status: 400 }
+    );
+  }
+
+  if (typeof password !== "string") {
+    return json<ActionData>(
+      { errors: { password: "Password is required" } },
+      { status: 400 }
+    );
+  }
+
+  if (password.length < 8) {
+    return json<ActionData>(
+      { errors: { password: "Password is too short" } },
       { status: 400 }
     );
   }
