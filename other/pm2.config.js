@@ -26,7 +26,7 @@ module.exports = {
     },
     {
       name: "Remix",
-      script: "remix watch",
+      script: "cross-env NODE_ENV=development remix watch",
       ignore_watch: ["."],
       env,
     },
