@@ -1,6 +1,7 @@
+const { execSync } = require("child_process");
+const crypto = require("crypto");
 const fs = require("fs/promises");
 const path = require("path");
-const crypto = require("crypto");
 const toml = require("@iarna/toml");
 
 function escapeRegExp(string) {
@@ -48,6 +49,19 @@ async function main({ rootDirectory }) {
     fs.writeFile(README_PATH, newReadme),
     fs.writeFile(ENV_PATH, newEnv),
   ]);
+
+  console.log(`1️⃣  Setting up the database`);
+  execSync(`npm run db:deploy`, { stdio: "inherit", cwd: rootDirectory });
+
+  // seed the database
+  console.log("2️⃣  Putting some test data into the database.");
+  execSync(`npm run db:seed`, { stdio: "inherit", cwd: rootDirectory });
+
+  // get the build ready
+  console.log("3️⃣  Running the build to verify things are working");
+  execSync(`npm run build`, { stdio: "inherit", cwd: rootDirectory });
+
+  console.log(`✅  Project is ready! Start development with "npm run dev"`);
 }
 
 module.exports = main;
