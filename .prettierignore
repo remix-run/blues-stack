@@ -1,7 +1,11 @@
-/node_modules
-/.cache
+node_modules
+
 /build
 /public/build
-/postgres-data
 .env
+
+/cypress/screenshots
+/cypress/videos
+/postgres-data
+
 /app/styles/tailwind.css
