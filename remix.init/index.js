@@ -48,6 +48,21 @@ async function main({ rootDirectory }) {
     fs.writeFile(README_PATH, newReadme),
     fs.writeFile(ENV_PATH, newEnv),
   ]);
+
+  console.log(
+    `
+Setup is almost complete. Follow these steps to finish initialization:
+
+- Start the database:
+  npm run docker
+
+- Run setup:
+  npm run setup
+
+Once that's done, you're ready to rock and roll 🤘
+  npm run dev
+    `.trim()
+  );
 }
 
 module.exports = main;
