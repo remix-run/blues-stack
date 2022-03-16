@@ -59,7 +59,7 @@ Setup is almost complete. Follow these steps to finish initialization:
 - Run setup:
   npm run setup
 
-Once that's done, you're ready to rock and roll 🤘
+- You're now ready to rock and roll 🤘
   npm run dev
     `.trim()
   );
