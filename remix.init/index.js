@@ -1,7 +1,9 @@
+const crypto = require("crypto");
 const fs = require("fs/promises");
 const path = require("path");
-const crypto = require("crypto");
+
 const toml = require("@iarna/toml");
+const sort = require("sort-package-json");
 
 function escapeRegExp(string) {
   // $& means the whole matched string
@@ -17,6 +19,7 @@ async function main({ rootDirectory }) {
   const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml");
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
   const ENV_PATH = path.join(rootDirectory, ".env");
+  const PACKAGE_JSON_PATH = path.join(rootDirectory, "package.json");
 
   const REPLACER = "blues-stack-template";
 
@@ -24,10 +27,11 @@ async function main({ rootDirectory }) {
   const SUFFIX = getRandomString(2);
   const APP_NAME = DIR_NAME + "-" + SUFFIX;
 
-  const [prodContent, readme, env] = await Promise.all([
+  const [prodContent, readme, env, packageJson] = await Promise.all([
     fs.readFile(FLY_TOML_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
     fs.readFile(EXAMPLE_ENV_PATH, "utf-8"),
+    fs.readFile(PACKAGE_JSON_PATH, "utf-8"),
   ]);
 
   const newEnv = env.replace(
@@ -43,10 +47,18 @@ async function main({ rootDirectory }) {
     APP_NAME
   );
 
+  const newPackageJson =
+    JSON.stringify(
+      sort({ ...JSON.parse(packageJson), name: APP_NAME }),
+      null,
+      2
+    ) + "\n";
+
   await Promise.all([
     fs.writeFile(FLY_TOML_PATH, toml.stringify(prodToml)),
     fs.writeFile(README_PATH, newReadme),
     fs.writeFile(ENV_PATH, newEnv),
+    fs.writeFile(PACKAGE_JSON_PATH, newPackageJson),
   ]);
 
   console.log(
