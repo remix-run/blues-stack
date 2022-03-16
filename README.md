@@ -41,12 +41,22 @@ docker-compose up
 That may take a moment to start up as it needs to get the postgres image from the Docker registry, after it's done, you'll need to migrate your database. With the database ready to accept connections, open a new tab and run this:
 
 ```sh
-npx prisma migrate deploy
+npx prisma migrate dev
 ```
 
 When this finishes successfully, it will say:
 
 > All migrations have been successfully applied.
+
+Then seed the database using the following command
+
+```sh
+npx prisma db seed
+```
+
+When this finishes successfully, it will say:
+
+> Database has been seeded. 🌱
 
 If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
 
