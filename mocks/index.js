@@ -1,2 +1,2 @@
-require("esbuild-register/dist/node").register();
-require("./start");
+require('esbuild-register/dist/node').register()
+require('./start')

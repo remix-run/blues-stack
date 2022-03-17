@@ -5,7 +5,7 @@
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ```
-npx create-remix --template remix-run/blues-stack
+npx create-remix --template remix-run/amapiano-stack
 ```
 
 ## What's in the stack
@@ -80,8 +80,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly create blues-stack-template
-  fly create blues-stack-template-staging
+  fly create amapiano-stack-template
+  fly create amapiano-stack-template-staging
   ```
 
 - Create a new [GitHub Repository](https://repo.new)
@@ -91,8 +91,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blues-stack-template
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blues-stack-template-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app amapiano-stack-template
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app amapiano-stack-template-staging
   ```
 
   If you don't have openssl installed, you can also use [1password](https://1password.com/generate-password) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
@@ -100,11 +100,11 @@ Prior to your first deployment, you'll need to do a few things:
 - Create a database for both your staging and production environments. Run the following:
 
   ```sh
-  fly postgres create --name blues-stack-template-db
-  fly postgres attach --postgres-app blues-stack-template-db --app blues-stack-template
+  fly postgres create --name amapiano-stack-template-db
+  fly postgres attach --postgres-app amapiano-stack-template-db --app amapiano-stack-template
 
-  fly postgres create --name blues-stack-template-staging-db
-  fly postgres attach --postgres-app blues-stack-template-staging-db --app blues-stack-template-staging
+  fly postgres create --name amapiano-stack-template-staging-db
+  fly postgres attach --postgres-app amapiano-stack-template-staging-db --app amapiano-stack-template-staging
   ```
 
   Fly will take care of setting the DATABASE_URL secret for you.
@@ -140,7 +140,7 @@ To run these tests in development, run `npm run test:e2e:dev` which will start t
 We have a utility for testing authenticated features without having to go through the login flow:
 
 ```ts
-cy.login();
+cy.login()
 // you are now logged in as a new user
 ```
 
@@ -148,8 +148,8 @@ We also have a utility to auto-delete the user at the end of your test. Just mak
 
 ```ts
 afterEach(() => {
-  cy.cleanupUser();
-});
+  cy.cleanupUser()
+})
 ```
 
 That way, we can keep your local db clean and keep your tests isolated from one another.
