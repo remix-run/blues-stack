@@ -7,7 +7,7 @@
   "scripts": {
     "build": "run-s build:*",
     "build:css": "npm run generate:css -- --minify",
-    "build:remix": "cross-env NODE_ENV=production remix build",
+    "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build",
     "dev": "pm2-dev ./other/pm2.config.js",
     "docker": "docker-compose up -d",
