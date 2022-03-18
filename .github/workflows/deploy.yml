@@ -8,6 +8,8 @@ on:
 
 jobs:
   check-env:
+    name: ⬣ Check Env
+    runs-on: ubuntu-latest
     outputs:
       my-key: ${{ steps.my-key.outputs.defined }}
     steps:
