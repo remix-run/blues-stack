@@ -6,6 +6,7 @@ ENV NODE_ENV production
 
 # Install openssl for Prisma
 RUN apt-get update && apt-get install -y openssl
+RUN apk --no-cache add dumb-init
 
 # Install all node_modules, including dev dependencies
 FROM base as deps
@@ -50,4 +51,4 @@ COPY --from=build /myapp/build /myapp/build
 COPY --from=build /myapp/public /myapp/public
 ADD . .
 
-CMD ["npm", "start"]
+CMD ["dumb-init", "npm", "start"]
