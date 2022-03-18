@@ -1,11 +1,11 @@
-# Remix Blues Stack
+# Sovtech Amapiano Stack
 
-![The Remix Blues Stack](https://repository-images.githubusercontent.com/461012689/37d5bd8b-fa9c-4ab0-893c-f0a199d5012d)
+![The Sovtech Amapiano Stack](https://repository-images.githubusercontent.com/461012689/37d5bd8b-fa9c-4ab0-893c-f0a199d5012d)
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ```
-npx create-remix --template remix-run/amapiano-stack
+npx create-remix --template sovtech/amapiano-stack
 ```
 
 ## What's in the stack
