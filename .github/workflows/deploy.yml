@@ -7,6 +7,15 @@ on:
   pull_request: {}
 
 jobs:
+  check-env:
+    outputs:
+      my-key: ${{ steps.my-key.outputs.defined }}
+    steps:
+      - id: my-key
+        env:
+          MY_KEY: ${{ secrets.FLY_API_TOKEN }}
+        if: "${{ env.MY_KEY != '' }}"
+        run: echo "::set-output name=defined::true"
   lint:
     name: ⬣ ESLint
     runs-on: ubuntu-latest
@@ -116,8 +125,9 @@ jobs:
 
   build:
     name: 🐳 Build
+    needs: [check-env]
     # only build/deploy main branch on pushes
-    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && github.event_name == 'push' && secrets.FLY_API_TOKEN }}
+    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && github.event_name == 'push' && needs.check-env.outputs.my-key == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: 🛑 Cancel Previous Runs
@@ -176,9 +186,9 @@ jobs:
   deploy:
     name: 🚀 Deploy
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, vitest, cypress, build]
+    needs: [lint, typecheck, vitest, cypress, build, check-env]
     # only build/deploy main branch on pushes
-    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && github.event_name == 'push' && secrets.FLY_API_TOKEN }}
+    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && github.event_name == 'push' && needs.check-env.outputs.my-key == 'true' }}
 
     steps:
       - name: 🛑 Cancel Previous Runs
