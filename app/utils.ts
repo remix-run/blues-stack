@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 import { useMatches } from 'remix'
-
 import type { User } from '~/models/user.server'
 
 /**
@@ -11,7 +10,7 @@ import type { User } from '~/models/user.server'
  */
 export function useMatchesData(id: string): Record<string, unknown> | undefined {
   const matchingRoutes = useMatches()
-  const route = useMemo(() => matchingRoutes.find((route) => route.id === id), [matchingRoutes, id])
+  const route = useMemo(() => matchingRoutes.find((r) => r.id === id), [matchingRoutes, id])
   return route?.data
 }
 
