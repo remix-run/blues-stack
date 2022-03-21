@@ -34,6 +34,8 @@ Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --
   npm run docker
   ```
 
+  > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
+
 - Initial setup:
 
   ```sh
@@ -45,6 +47,8 @@ Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --
   ```sh
   npm run dev
   ```
+
+  > **Note:** You may see a nasty error in the PM2 logs when you initially run the dev script. This should only appear once and will not affect your local app server. We are working on improving this!
 
 This starts your app in development mode, rebuilding assets on file changes.
 
