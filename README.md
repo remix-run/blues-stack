@@ -90,14 +90,12 @@ Prior to your first deployment, you'll need to do a few things:
   fly create blues-stack-template-staging
   ```
 
-  > **Note:** If you choose a name other than `blues-stack-template`, please note that it must not include spaces. Fly will generate a domain based on the app name you choose at this step.
-
 - Initialize Git.
 
   ```sh
   git init
   ```
-  
+
 - Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
 
   ```sh
@@ -113,6 +111,14 @@ Prior to your first deployment, you'll need to do a few things:
   fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blues-stack-template-staging
   ```
 
+  > **Note:** When creating the staging secret, you may get a warning from the Fly CLI that looks like this:
+  >
+  > ```
+  > WARN app flag 'blues-stack-template-staging' does not match app name in config file 'blues-stack-template'
+  > ```
+  >
+  > This simply means that the current directory contains a config that references the production app we created in the first step. Ignore this warning and proceed to create the secret.
+
   If you don't have openssl installed, you can also use [1password](https://1password.com/generate-password) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
 - Create a database for both your staging and production environments. Run the following:
@@ -125,13 +131,7 @@ Prior to your first deployment, you'll need to do a few things:
   fly postgres attach --postgres-app blues-stack-template-staging-db --app blues-stack-template-staging
   ```
 
-  > **Note:** When creating the development database, you may get a warning from the Fly CLI that looks like this:
-  >
-  > ```
-  > WARN app flag 'blues-stack-template-staging' does not match app name in config file 'blues-stack-template'
-  > ```
-  >
-  > This simply means that the current directory contains a config that references the production database we created in the first step. Ignore this warning and proceed to create the development database.
+  > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
 
 Fly will take care of setting the `DATABASE_URL` secret for you.
 
