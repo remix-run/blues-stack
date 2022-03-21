@@ -51,7 +51,7 @@ This starts your app in development mode, rebuilding assets on file changes.
 The database seed script creates a new user with some data you can use to get started:
 
 - Email: `rachel@remix.run`
-- Password: `rachelrox`
+- Password: `racheliscool`
 
 If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
 
@@ -77,6 +77,8 @@ Prior to your first deployment, you'll need to do a few things:
   fly auth signup
   ```
 
+  > **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed into the browser.
+
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
@@ -84,7 +86,19 @@ Prior to your first deployment, you'll need to do a few things:
   fly create blues-stack-template-staging
   ```
 
-- Create a new [GitHub Repository](https://repo.new)
+  > **Note:** If you choose a name other than `blues-stack-template`, please note that it must not include spaces. Fly will generate a domain based on the app name you choose at this step.
+
+- Initialize Git.
+
+  ```sh
+  git init
+  ```
+  
+- Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
+
+  ```sh
+  git remote add origin <ORIGIN_URL>
+  ```
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
 
@@ -107,7 +121,15 @@ Prior to your first deployment, you'll need to do a few things:
   fly postgres attach --postgres-app blues-stack-template-staging-db --app blues-stack-template-staging
   ```
 
-  Fly will take care of setting the DATABASE_URL secret for you.
+  > **Note:** When creating the development database, you may get a warning from the Fly CLI that looks like this:
+  >
+  > ```
+  > WARN app flag 'blues-stack-template-staging' does not match app name in config file 'blues-stack-template'
+  > ```
+  >
+  > This simply means that the current directory contains a config that references the production database we created in the first step. Ignore this warning and proceed to create the development database.
+
+Fly will take care of setting the `DATABASE_URL` secret for you.
 
 Now that every is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
