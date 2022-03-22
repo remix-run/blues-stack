@@ -11,16 +11,6 @@ app.use((req, res, next) => {
   res.set("x-fly-region", process.env.FLY_REGION ?? "unknown");
   res.set("Strict-Transport-Security", `max-age=${60 * 60 * 24 * 365 * 100}`);
 
-  const proto = req.get("X-Forwarded-Proto");
-  const host = req.get("X-Forwarded-Host") ?? req.get("host");
-
-  // HTTPS-upgrade
-  if (proto === "http") {
-    res.set("X-Forwarded-Proto", "https");
-    res.redirect(`https://${host}${req.originalUrl}`);
-    return;
-  }
-
   // /clean-urls/ -> /clean-urls
   if (req.path.endsWith("/") && req.path.length > 1) {
     const query = req.url.slice(req.path.length);
