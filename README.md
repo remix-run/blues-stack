@@ -42,6 +42,12 @@ Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --
   npm run setup
   ```
 
+- Run the first build:
+
+  ```sh
+  npm run build
+  ```
+
 - Start dev server:
 
   ```sh

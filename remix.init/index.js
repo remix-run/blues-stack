@@ -71,7 +71,10 @@ Setup is almost complete. Follow these steps to finish initialization:
 - Start the database:
   npm run docker
 
-- Run setup (this runs the tests and things to verify things got setup properly):
+- Run setup (this updates the database):
+  npm run setup
+
+- Run the first build (this generates the server you will run):
   npm run setup
 
 - You're now ready to rock and roll 🤘
