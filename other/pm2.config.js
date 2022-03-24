@@ -6,15 +6,7 @@ module.exports = {
   apps: [
     {
       name: "Server",
-      script: [
-        "node",
-        "--inspect",
-        "--require ./node_modules/dotenv/config",
-        "--require ./mocks",
-        "./build/server.js",
-      ]
-        .filter(Boolean)
-        .join(" "),
+      script: "npm run dev:server",
       watch: ["./mocks/**/*.ts", "./build/server.js", "./.env"],
       env,
     },

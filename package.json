@@ -10,6 +10,7 @@
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build",
     "dev": "pm2-dev ./other/pm2.config.js",
+    "dev:server": "node --inspect --require ./node_modules/dotenv/config --require ./mocks ./build/server.js",
     "docker": "docker-compose up -d",
     "format": "prettier --write .",
     "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
