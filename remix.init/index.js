@@ -75,7 +75,7 @@ Setup is almost complete. Follow these steps to finish initialization:
   npm run setup
 
 - Run the first build (this generates the server you will run):
-  npm run setup
+  npm run build
 
 - You're now ready to rock and roll 🤘
   npm run dev
