@@ -1,10 +1,9 @@
-import * as React from 'react'
-import { Form, json, redirect, useActionData } from 'remix'
-import type { ActionFunction } from 'remix'
-import Alert from '@reach/alert'
+import * as React from "react";
+import type { ActionFunction } from "remix";
+import { Form, json, redirect, useActionData } from "remix";
+import { createNote } from '~/models/note.server';
+import { requireUserId } from '~/session.server';
 
-import { createNote } from '~/models/note.server'
-import { requireUserId } from '~/session.server'
 
 type ActionData = {
   errors?: {
@@ -68,9 +67,9 @@ export default function NewNotePage() {
           />
         </label>
         {actionData?.errors?.title && (
-          <Alert className="pt-1 text-red-700" id="title=error">
+          <div className="pt-1 text-red-700" id="title=error">
             {actionData.errors.title}
-          </Alert>
+          </div>
         )}
       </div>
 
@@ -87,9 +86,9 @@ export default function NewNotePage() {
           />
         </label>
         {actionData?.errors?.body && (
-          <Alert className="pt-1 text-red-700" id="body=error">
+          <div className="pt-1 text-red-700" id="body=error">
             {actionData.errors.body}
-          </Alert>
+          </div>
         )}
       </div>
 

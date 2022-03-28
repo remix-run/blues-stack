@@ -23,9 +23,12 @@ async function main({ rootDirectory }) {
 
   const REPLACER = 'amapiano-stack-template'
 
-  const DIR_NAME = path.basename(rootDirectory)
-  const SUFFIX = getRandomString(2)
-  const APP_NAME = DIR_NAME + '-' + SUFFIX
+  const DIR_NAME = path.basename(rootDirectory);
+  const SUFFIX = getRandomString(2);
+
+  const APP_NAME = (DIR_NAME + "-" + SUFFIX)
+    // get rid of anything that's not allowed in an app name
+    .replace(/[^a-zA-Z0-9-_]/g, "-");
 
   const [prodContent, readme, env, packageJson] = await Promise.all([
     fs.readFile(FLY_TOML_PATH, 'utf-8'),
@@ -58,8 +61,11 @@ Setup is almost complete. Follow these steps to finish initialization:
 - Start the database:
   npm run docker
 
-- Run setup:
+- Run setup (this updates the database):
   npm run setup
+
+- Run the first build (this generates the server you will run):
+  npm run build
 
 - You're now ready to rock and roll 🤘
   npm run dev

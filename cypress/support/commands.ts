@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker'
+import faker from '@faker-js/faker';
 
 declare global {
   namespace Cypress {
@@ -35,16 +35,16 @@ function login({
 }: {
   email?: string
 } = {}) {
-  cy.then(() => ({ email })).as('user')
-  cy.exec(`node --require esbuild-register ./cypress/support/create-user.ts "${email}"`).then(
-    ({ stdout }) => {
-      const cookieValue = stdout
-        .replace(/.*<cookie>(?<cookieValue>.*)<\/cookie>.*/s, '$<cookieValue>')
-        .trim()
-      cy.setCookie('__session', cookieValue)
-    }
-  )
-  return cy.get('@user')
+  cy.then(() => ({ email })).as("user");
+  cy.exec(
+    `npx ts-node --require tsconfig-paths/register ./cypress/support/create-user.ts "${email}"`
+  ).then(({ stdout }) => {
+    const cookieValue = stdout
+      .replace(/.*<cookie>(?<cookieValue>.*)<\/cookie>.*/s, "$<cookieValue>")
+      .trim();
+    cy.setCookie("__session", cookieValue);
+  });
+  return cy.get("@user");
 }
 
 function cleanupUser({ email }: { email?: string } = {}) {
@@ -62,8 +62,10 @@ function cleanupUser({ email }: { email?: string } = {}) {
 }
 
 function deleteUserByEmail(email: string) {
-  cy.exec(`node --require esbuild-register ./cypress/support/delete-user.ts "${email}"`)
-  cy.clearCookie('__session')
+  cy.exec(
+    `npx ts-node --require tsconfig-paths/register ./cypress/support/delete-user.ts "${email}"`
+  );
+  cy.clearCookie("__session");
 }
 
 Cypress.Commands.add('login', login)
