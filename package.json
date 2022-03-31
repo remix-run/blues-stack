@@ -39,6 +39,7 @@
     "@prisma/client": "^3.11.1",
     "@remix-run/express": "*",
     "@remix-run/react": "*",
+    "@remix-run/server-runtime": "*",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
