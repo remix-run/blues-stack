@@ -28,6 +28,20 @@ Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --
 
 ## Development
 
+- Install dependencies:
+
+  ```sh
+  npm install
+  ```
+
+- Setup environment variables:
+
+  ```sh
+  cp .env.example .env
+  ```
+  
+  > **Note:** This includes some default variables that configure the postgres instance specified in `docker-compose.yml` that you'll run in the next step. In most cases, you don't have to worry about changing these for local development, but if you happen to run several database containers or already have postgres running locally, you may need to consider specifying a separate `DATABASE_PORT` value to avoid conflicts.
+  
 - Start the Postgres Database in [Docker](https://www.docker.com/get-started):
 
   ```sh
@@ -36,7 +50,8 @@ Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --
 
   > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
 
-- Initial setup:
+
+- Initial database setup:
 
   ```sh
   npm run setup
