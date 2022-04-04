@@ -1,7 +1,6 @@
-import { createCookieSessionStorage, redirect, Session } from "@remix-run/node";
+import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 
-import type { User } from "~/models/user.server";
 import { getUserById } from "~/models/user.server";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
@@ -20,7 +19,7 @@ export const sessionStorage = createCookieSessionStorage({
 
 const USER_SESSION_KEY = "userId";
 
-export async function getSession(request: Request): Promise<Session> {
+export async function getSession(request: Request) {
   const cookie = request.headers.get("Cookie");
   return sessionStorage.getSession(cookie);
 }
@@ -31,7 +30,7 @@ export async function getUserId(request: Request): Promise<string | undefined> {
   return userId;
 }
 
-export async function getUser(request: Request): Promise<null | User> {
+export async function getUser(request: Request) {
   const userId = await getUserId(request);
   if (userId === undefined) return null;
 
@@ -44,7 +43,7 @@ export async function getUser(request: Request): Promise<null | User> {
 export async function requireUserId(
   request: Request,
   redirectTo: string = new URL(request.url).pathname
-): Promise<string> {
+) {
   const userId = await getUserId(request);
   if (!userId) {
     const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
@@ -53,7 +52,7 @@ export async function requireUserId(
   return userId;
 }
 
-export async function requireUser(request: Request): Promise<User> {
+export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
 
   const user = await getUserById(userId);
@@ -72,7 +71,7 @@ export async function createUserSession({
   userId: string;
   remember: boolean;
   redirectTo: string;
-}): Promise<Response> {
+}) {
   const session = await getSession(request);
   session.set(USER_SESSION_KEY, userId);
   return redirect(redirectTo, {
@@ -86,7 +85,7 @@ export async function createUserSession({
   });
 }
 
-export async function logout(request: Request): Promise<Response> {
+export async function logout(request: Request) {
   const session = await getSession(request);
   return redirect("/", {
     headers: {
