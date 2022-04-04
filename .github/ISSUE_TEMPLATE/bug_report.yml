@@ -3,7 +3,7 @@ description: Something is wrong with the Stack.
 body:
   - type: markdown
     attributes:
-      value: |
+      value: >-
         Thank you for helping to improve Remix!
 
         Our bandwidth on maintaining these stacks is limited. As a team, we're
