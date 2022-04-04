@@ -87,7 +87,7 @@ app.listen(port, () => {
 })
 
 function purgeRequireCache() {
-  // purge require cache on requests for "server side HMR" this won't const
+  // purge require cache on requests for "server side HMR" this won't let
   // you have in-memory objects between requests in development,
   // alternatively you can set up nodemon/pm2-dev to restart the server on
   // file changes, we prefer the DX of this though, so we've included it
