@@ -23,18 +23,22 @@ async function main({ rootDirectory }) {
 
   const REPLACER = 'amapiano-stack-template'
 
-  const DIR_NAME = path.basename(rootDirectory);
-  const SUFFIX = getRandomString(2);
+  const DIR_NAME = path.basename(rootDirectory)
+  const SUFFIX = getRandomString(2)
 
-  const APP_NAME = (DIR_NAME + "-" + SUFFIX)
+  const APP_NAME = (DIR_NAME + '-' + SUFFIX)
     // get rid of anything that's not allowed in an app name
-    .replace(/[^a-zA-Z0-9-_]/g, "-");
+    .replace(/[^a-zA-Z0-9-_]/g, '-')
 
   const [prodContent, readme, env, packageJson] = await Promise.all([
     fs.readFile(FLY_TOML_PATH, 'utf-8'),
     fs.readFile(README_PATH, 'utf-8'),
     fs.readFile(EXAMPLE_ENV_PATH, 'utf-8'),
-    fs.readFile(PACKAGE_JSON_PATH, 'utf-8')
+    fs.readFile(PACKAGE_JSON_PATH, 'utf-8'),
+    fs.rm(path.join(rootDirectory, '.github/ISSUE_TEMPLATE'), {
+      recursive: true
+    }),
+    fs.rm(path.join(rootDirectory, '.github/PULL_REQUEST_TEMPLATE.md'))
   ])
 
   const newEnv = env.replace(/^SESSION_SECRET=.*$/m, `SESSION_SECRET="${getRandomString(16)}"`)
