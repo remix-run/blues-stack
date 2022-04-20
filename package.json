@@ -8,10 +8,10 @@
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
     "dev": "run-p dev:*",
-    "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config --require ./mocks ./build/server.js",
     "dev:build": "cross-env NODE_ENV=development npm run build:server -- --watch",
-    "dev:remix": "cross-env NODE_ENV=development remix watch",
     "dev:css": "cross-env NODE_ENV=development npm run generate:css -- --watch",
+    "dev:remix": "cross-env NODE_ENV=development remix watch",
+    "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config --require ./mocks ./build/server.js",
     "docker": "docker-compose up -d",
     "format": "prettier --write .",
     "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
@@ -75,6 +75,7 @@
     "esbuild": "^0.15.5",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "happy-dom": "^6.0.4",
     "msw": "^0.45.0",
     "npm-run-all": "^4.1.5",
@@ -95,6 +96,6 @@
     "node": ">=14"
   },
   "prisma": {
-    "seed": "node --require tsconfig-paths/register prisma/seed.js"
+    "seed": "ts-node --require tsconfig-paths/register prisma/seed.ts"
   }
 }
