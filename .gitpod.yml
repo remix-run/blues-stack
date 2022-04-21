@@ -42,7 +42,7 @@ tasks:
     command: docker-compose up
 
   - init: npm install
-    command: npm run setup && gp await-port 5432 && npm run dev
+    command: gp await-port 5432 && npm run setup && npm run dev
 
 vscode:
   extensions:
