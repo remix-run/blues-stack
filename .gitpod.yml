@@ -37,6 +37,10 @@ tasks:
         fi
       fi
 
+  - name: Docker
+    init: docker-compose pull
+    command: docker-compose up
+
   - init: npm install
     command: npm run setup && npm run dev
 
