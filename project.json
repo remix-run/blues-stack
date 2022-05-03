@@ -1,0 +1,40 @@
+{
+  "name": "blues-stack",
+  "targets": {
+    "dev-all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "nx dev:server blues-stack",
+            "prefix": "[SERVER]",
+            "color": "blue"
+          },
+          {
+            "command": "nx dev:build blues-stack",
+            "prefix": "[BUILD-]",
+            "color": "green"
+          },
+          {
+            "command": "nx dev:remix blues-stack",
+            "prefix": "[REMIX-]",
+            "color": "yellow"
+          },
+          {
+            "command": "nx dev:css blues-stack",
+            "prefix": "[CSS---]",
+            "color": "cyan"
+          }
+        ]
+      }
+    },
+    "validate-all": {
+      "executor": "nx:noop",
+      "dependsOn": ["test:run", "lint", "typecheck", "test:e2e:run"]
+    },
+    "build-all": {
+      "executor": "nx:noop",
+      "dependsOn": ["build:css", "build:remix", "build:server"]
+    }
+  }
+}
