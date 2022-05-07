@@ -12,35 +12,57 @@ FROM base as deps
 
 WORKDIR /myapp
 
-ADD package.json package-lock.json ./
-RUN npm install --production=false
+RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
+
+ADD package.json pnpm-lock.yaml ./
+RUN pnpm fetch
+
+RUN pnpm install -r --offline --prod=false
 
 # Setup production node_modules
 FROM base as production-deps
 
 WORKDIR /myapp
 
+RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
+
+ADD package.json pnpm-lock.yaml ./
+RUN pnpm fetch
+
 COPY --from=deps /myapp/node_modules /myapp/node_modules
-ADD package.json package-lock.json ./
-RUN npm prune --production
+ADD package.json pnpm-lock.yaml ./
+
+RUN pnpm prune --prod
 
 # Build the app
 FROM base as build
 
 WORKDIR /myapp
 
+RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
+
+ADD package.json pnpm-lock.yaml ./
+RUN pnpm fetch
+
 COPY --from=deps /myapp/node_modules /myapp/node_modules
 
 ADD prisma .
-RUN npx prisma generate
+RUN pnpm exec prisma generate
+
+RUN pnpm fetch
 
 ADD . .
-RUN npm run build
+RUN pnpm run build
 
 # Finally, build the production image with minimal footprint
 FROM base
 
 WORKDIR /myapp
+
+RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
+
+ADD package.json pnpm-lock.yaml ./
+RUN pnpm fetch
 
 COPY --from=production-deps /myapp/node_modules /myapp/node_modules
 COPY --from=build /myapp/node_modules/.prisma /myapp/node_modules/.prisma
@@ -49,4 +71,4 @@ COPY --from=build /myapp/build /myapp/build
 COPY --from=build /myapp/public /myapp/public
 ADD . .
 
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
