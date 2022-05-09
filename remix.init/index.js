@@ -12,6 +12,15 @@ async function main({ rootDirectory }) {
     // get rid of anything that's not allowed in an app name
     .replace(/[^a-zA-Z0-9-_]/g, "-");
 
+  // copy files
+  const filesToCopy = [["remix.init/gitignore", ".gitignore"]];
+  for (const [from, to] of filesToCopy) {
+    await fs.copyFile(
+      path.join(rootDirectory, from),
+      path.join(rootDirectory, to)
+    );
+  }
+
   // update env to have SESSION_SECRET
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
   const ENV_PATH = path.join(rootDirectory, ".env");
