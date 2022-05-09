@@ -20,7 +20,7 @@
     }
   },
   "cli": {
-    "defaultProjectName": "blues-stack"
+    "defaultProjectName": "blues-stack-template"
   },
   "pluginsConfig": {
     "@nrwl/js": {

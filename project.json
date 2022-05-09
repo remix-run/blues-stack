@@ -1,27 +1,27 @@
 {
-  "name": "blues-stack",
+  "name": "blues-stack-template",
   "targets": {
     "dev-all": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
-            "command": "nx dev:server blues-stack",
+            "command": "nx dev:server blues-stack-template",
             "prefix": "[SERVER]",
             "color": "blue"
           },
           {
-            "command": "nx dev:build blues-stack",
+            "command": "nx dev:build blues-stack-template",
             "prefix": "[BUILD-]",
             "color": "green"
           },
           {
-            "command": "nx dev:remix blues-stack",
+            "command": "nx dev:remix blues-stack-template",
             "prefix": "[REMIX-]",
             "color": "yellow"
           },
           {
-            "command": "nx dev:css blues-stack",
+            "command": "nx dev:css blues-stack-template",
             "prefix": "[CSS---]",
             "color": "cyan"
           }
