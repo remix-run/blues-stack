@@ -1,9 +1,3 @@
-import type {
-	LinksFunction,
-	LoaderFunction,
-	MetaFunction
-} from '@remix-run/node'
-import { json } from '@remix-run/node'
 import {
 	Links,
 	LiveReload,
@@ -12,12 +6,18 @@ import {
 	Scripts,
 	ScrollRestoration
 } from '@remix-run/react'
+import type {
+	LinksFunction,
+	LoaderFunction,
+	MetaFunction
+} from '@remix-run/node'
 
-import tailwindStylesheetUrl from './styles/tailwind.css'
 import { getUser } from './session.server'
+import globalStyles from './styles/global.css'
+import { json } from '@remix-run/node'
 
 export const links: LinksFunction = () => {
-	return [{ rel: 'stylesheet', href: tailwindStylesheetUrl }]
+	return [{ rel: 'stylesheet', href: globalStyles }]
 }
 
 export const meta: MetaFunction = () => ({
