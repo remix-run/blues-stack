@@ -16,3 +16,5 @@ node_modules
 /postgres-data
 
 /app/styles/tailwind.css
+
+/.idea
