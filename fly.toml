@@ -1,4 +1,4 @@
-app = "blues-stack-template"
+app = "funk-stack-template"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
@@ -8,7 +8,7 @@ processes = []
   PORT = "8080"
 
 [deploy]
-  release_command = "npx prisma migrate deploy"
+  release_command = "pnpm exec prisma migrate deploy"
 
 [experimental]
   allowed_public_ports = []
