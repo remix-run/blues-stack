@@ -5,15 +5,18 @@ FROM node:16-bullseye-slim as base
 ENV NODE_ENV production
 
 # Install openssl for Prisma
-RUN apt-get update && apt-get install -y openssl
+RUN apt-get update && apt-get install -y openssl curl
 
 # Install all node_modules, including dev dependencies
 FROM base as deps
 
 WORKDIR /myapp
 
-ADD package.json package-lock.json ./
-RUN npm install --production=false
+ADD package.json ./
+ADD package-lock.jso[n] yarn.loc[k] pnpm-lock.yam[l] pnpm-lock.ym[l] .pnpmfile.cj[s] ./
+# the following script will install the dependencies with which ever lock file is available
+ADD scripts/install-deps.sh ./install-deps.sh
+RUN ./install-deps.sh
 
 # Setup production node_modules
 FROM base as production-deps
@@ -21,8 +24,11 @@ FROM base as production-deps
 WORKDIR /myapp
 
 COPY --from=deps /myapp/node_modules /myapp/node_modules
-ADD package.json package-lock.json ./
-RUN npm prune --production
+ADD package.json ./
+ADD package-lock.jso[n] yarn.loc[k] pnpm-lock.yam[l] pnpm-lock.ym[l] .pnpmfile.cj[s] ./
+# the following script will install the dependencies with which ever lock file is available
+ADD scripts/install-deps.sh ./install-deps.sh
+RUN ./install-deps.sh --prune
 
 # Build the app
 FROM base as build
