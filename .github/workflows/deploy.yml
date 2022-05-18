@@ -5,6 +5,9 @@ on:
       - main
       - dev
   pull_request: {}
+permissions:
+    actions: write
+    contents: read
 
 jobs:
   lint:
