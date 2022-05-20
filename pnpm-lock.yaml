@@ -68,6 +68,7 @@ specifiers:
   msw: ^0.39.2
   postcss: ^8.4.13
   postcss-cli: ^9.1.0
+  postcss-import: ^14.1.0
   postcss-sass: ^0.5.0
   prettier: ^2.6.1
   prettier-plugin-tailwindcss: ^0.1.8
@@ -161,6 +162,7 @@ devDependencies:
   msw: 0.39.2
   postcss: 8.4.13
   postcss-cli: 9.1.0_4jqnslpwnj4ifyjfqbkuebd4fy
+  postcss-import: 14.1.0_postcss@8.4.13
   postcss-sass: 0.5.0
   prettier: 2.6.2
   prettier-plugin-tailwindcss: 0.1.10_prettier@2.6.2
@@ -8813,6 +8815,18 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.13
+    dev: true
+
+  /postcss-import/14.1.0_postcss@8.4.13:
+    resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      postcss: ^8.0.0
+    dependencies:
+      postcss: 8.4.13
+      postcss-value-parser: 4.2.0
+      read-cache: 1.0.0
+      resolve: 1.22.0
     dev: true
 
   /postcss-js/4.0.0_postcss@8.4.13:

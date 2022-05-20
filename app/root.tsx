@@ -13,11 +13,11 @@ import type {
 } from '@remix-run/node'
 
 import { getUser } from './session.server'
-import globalStyles from './styles/global.css'
 import { json } from '@remix-run/node'
+import styles from './styles/global.css'
 
 export const links: LinksFunction = () => {
-	return [{ rel: 'stylesheet', href: globalStyles }]
+	return [{ rel: 'stylesheet', href: styles }]
 }
 
 export const meta: MetaFunction = () => ({
