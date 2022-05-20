@@ -13,8 +13,6 @@ module.exports = {
 		'plugin:eslint-comments/recommended',
 		'plugin:promise/recommended',
 		'plugin:switch-case/recommended',
-		'plugin:import/recommended',
-		'plugin:import/typescript',
 		'plugin:jsx-a11y/recommended',
 		'plugin:react/recommended',
 		'plugin:react-hooks/recommended',
@@ -30,7 +28,6 @@ module.exports = {
 		'no-use-extend-native',
 		'optimize-regex',
 		'switch-case',
-		'import',
 		'@typescript-eslint',
 		'jsx-a11y',
 		'react',
@@ -67,15 +64,6 @@ module.exports = {
 		'react/react-in-jsx-scope': 'off'
 	},
 	settings: {
-		'import/parsers': {
-			'@typescript-eslint/parser': ['.ts', '.tsx']
-		},
-		'import/resolver': {
-			typescript: {
-				alwaysTryTypes: true,
-				project: './'
-			}
-		},
 		react: {
 			version: 'detect'
 		}

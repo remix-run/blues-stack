@@ -1,7 +1,10 @@
-module.exports = {
-	// syntax: 'postcss-sass',
+// const fs = require('fs')
+
+module.exports = async ctx => ({
+	syntax: 'postcss-sass',
 	plugins: {
 		tailwindcss: {},
-		autoprefixer: {}
+		autoprefixer: {},
+		cssnano: ctx.env === 'production' ? {} : false
 	}
-}
+})

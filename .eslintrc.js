@@ -19,8 +19,6 @@ module.exports = {
 		'plugin:eslint-comments/recommended',
 		'plugin:promise/recommended',
 		'plugin:switch-case/recommended',
-		'plugin:import/recommended',
-		'plugin:import/typescript',
 		'plugin:markdown/recommended',
 		'plugin:json/recommended-with-comments',
 		'plugin:jsx-a11y/recommended',
@@ -46,7 +44,6 @@ module.exports = {
 		'no-use-extend-native',
 		'optimize-regex',
 		'switch-case',
-		'import',
 		'@typescript-eslint',
 		'html',
 		'jsx-a11y',
@@ -84,15 +81,6 @@ module.exports = {
 		'react/react-in-jsx-scope': 'off'
 	},
 	settings: {
-		'import/parsers': {
-			'@typescript-eslint/parser': ['.ts', '.tsx']
-		},
-		'import/resolver': {
-			typescript: {
-				alwaysTryTypes: true,
-				project: './'
-			}
-		},
 		react: {
 			version: 'detect'
 		},
@@ -117,7 +105,8 @@ module.exports = {
 				'plugin:eslint-comments/recommended',
 				'plugin:promise/recommended',
 				'plugin:switch-case/recommended',
-				'plugin:import/recommended',
+				'@remix-run/eslint-config',
+				'@remix-run/eslint-config/node',
 				'plugin:prettier/recommended'
 			],
 			plugins: [
@@ -128,7 +117,6 @@ module.exports = {
 				'no-use-extend-native',
 				'optimize-regex',
 				'switch-case',
-				'import',
 				'prettier'
 			],
 			rules: {
@@ -174,11 +162,11 @@ module.exports = {
 				'plugin:eslint-comments/recommended',
 				'plugin:promise/recommended',
 				'plugin:switch-case/recommended',
-				'plugin:import/recommended',
-				'plugin:import/typescript',
 				'plugin:jsx-a11y/recommended',
 				'plugin:react/recommended',
 				'plugin:react-hooks/recommended',
+				'@remix-run/eslint-config',
+				'@remix-run/eslint-config/node',
 				'plugin:cypress/recommended',
 				'plugin:testing-library/react',
 				'plugin:prettier/recommended'
@@ -191,7 +179,6 @@ module.exports = {
 				'no-use-extend-native',
 				'optimize-regex',
 				'switch-case',
-				'import',
 				'@typescript-eslint',
 				'jsx-a11y',
 				'react',
@@ -228,15 +215,6 @@ module.exports = {
 				'react/react-in-jsx-scope': 'off'
 			},
 			settings: {
-				'import/parsers': {
-					'@typescript-eslint/parser': ['.ts', '.tsx']
-				},
-				'import/resolver': {
-					typescript: {
-						alwaysTryTypes: true,
-						project: './'
-					}
-				},
 				react: {
 					version: 'detect'
 				}
