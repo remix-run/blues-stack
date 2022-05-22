@@ -103,6 +103,7 @@
 		"eslint-plugin-testing-library": "^5.1.0",
 		"eslint-plugin-unicorn": "^41.0.1",
 		"happy-dom": "^2.55.0",
+		"lint-staged": "^12.4.1",
 		"msw": "^0.39.2",
 		"postcss": "^8.4.12",
 		"prettier": "^2.6.1",
@@ -122,5 +123,14 @@
 	},
 	"prisma": {
 		"seed": "ts-node --require tsconfig-paths/register prisma/seed.ts"
+	},
+	"lint-staged": {
+		"*.ts": [
+			"pnpm run lint",
+			"pnpm run test --findRelatedTests"
+		],
+		"*.sass": [
+			"pnpm run lint:styles"
+		]
 	}
 }
