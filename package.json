@@ -6,7 +6,7 @@
     "build": "run-s build:*",
     "build:css": "npm run generate:css -- --minify",
     "build:remix": "remix build",
-    "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build",
+    "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
     "dev": "run-p dev:*",
     "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config --require ./mocks ./build/server.js",
     "dev:build": "cross-env NODE_ENV=development npm run build:server -- --watch",
