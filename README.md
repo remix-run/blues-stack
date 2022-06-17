@@ -1,14 +1,16 @@
-# Remix Blues Stack
+# Remix Prog Stack
 
-![The Remix Blues Stack](https://repository-images.githubusercontent.com/461012689/37d5bd8b-fa9c-4ab0-893c-f0a199d5012d)
+[Motivation behind the stack](https://www.youtube.com/watch?v=ZNIV2H-jmfM)
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ```
-npx create-remix --template remix-run/blues-stack
+npx create-remix --template k1sul1/prog-stack
 ```
 
 ## What's in the stack
+
+Everything that [the Blues stack](https://github.com/remix-run/blues-stack) had when this stack was forked from it on 2022-06-17, and a tad more.
 
 - [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
 - [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
@@ -96,8 +98,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly create blues-stack-template
-  fly create blues-stack-template-staging
+  fly create remix-prog-stack
+  fly create remix-prog-stack-staging
   ```
 
 - Initialize Git.
@@ -117,14 +119,14 @@ Prior to your first deployment, you'll need to do a few things:
 - Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blues-stack-template
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blues-stack-template-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-prog-stack
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-prog-stack-staging
   ```
 
   > **Note:** When creating the staging secret, you may get a warning from the Fly CLI that looks like this:
   >
   > ```
-  > WARN app flag 'blues-stack-template-staging' does not match app name in config file 'blues-stack-template'
+  > WARN app flag 'remix-prog-stack-staging' does not match app name in config file 'remix-prog-stack'
   > ```
   >
   > This simply means that the current directory contains a config that references the production app we created in the first step. Ignore this warning and proceed to create the secret.
@@ -134,11 +136,11 @@ Prior to your first deployment, you'll need to do a few things:
 - Create a database for both your staging and production environments. Run the following:
 
   ```sh
-  fly postgres create --name blues-stack-template-db
-  fly postgres attach --postgres-app blues-stack-template-db --app blues-stack-template
+  fly postgres create --name remix-prog-stack-db
+  fly postgres attach --postgres-app remix-prog-stack-db --app remix-prog-stack
 
-  fly postgres create --name blues-stack-template-staging-db
-  fly postgres attach --postgres-app blues-stack-template-staging-db --app blues-stack-template-staging
+  fly postgres create --name remix-prog-stack-staging-db
+  fly postgres attach --postgres-app remix-prog-stack-staging-db --app remix-prog-stack-staging
   ```
 
   > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
