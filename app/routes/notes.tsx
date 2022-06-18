@@ -2,7 +2,7 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
-import { requireUserId } from "~/session.server";
+import { requireUserUuid } from "~/server/session.server";
 import { useUser } from "~/utils";
 import { getNoteListItems } from "~/models/note.server";
 
@@ -11,8 +11,8 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await requireUserId(request);
-  const noteListItems = await getNoteListItems({ userId });
+  const userUuid = await requireUserUuid(request);
+  const noteListItems = await getNoteListItems({ userUuid });
   return json<LoaderData>({ noteListItems });
 };
 
@@ -50,12 +50,12 @@ export default function NotesPage() {
           ) : (
             <ol>
               {data.noteListItems.map((note) => (
-                <li key={note.id}>
+                <li key={note.uuid}>
                   <NavLink
                     className={({ isActive }) =>
                       `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
                     }
-                    to={note.id}
+                    to={note.uuid}
                   >
                     📝 {note.title}
                   </NavLink>

@@ -7,12 +7,12 @@ import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 
-import { createUserSession, getUserId } from "~/session.server";
+import { createUserSession, getUserUUID } from "~/server/session.server";
 import { verifyLogin } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserId(request);
+  const userId = await getUserUUID(request);
   if (userId) return redirect("/");
   return json({});
 };
@@ -45,7 +45,7 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  if (password.length < 8) {
+  if (password.length < 3) {
     return json<ActionData>(
       { errors: { password: "Password is too short" } },
       { status: 400 }
@@ -63,7 +63,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   return createUserSession({
     request,
-    userId: user.id,
+    userId: user.uuid,
     remember: remember === "on" ? true : false,
     redirectTo,
   });

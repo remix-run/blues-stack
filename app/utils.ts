@@ -3,6 +3,12 @@ import { useMemo } from "react";
 
 import type { User } from "~/models/user.server";
 
+export function invariant(condition: any, error: string): void {
+  if (condition) return;
+
+  throw new Error(error);
+}
+
 const DEFAULT_REDIRECT = "/";
 
 /**

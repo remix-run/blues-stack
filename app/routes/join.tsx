@@ -7,13 +7,18 @@ import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 
-import { getUserId, createUserSession } from "~/session.server";
+import { getUserUUID, createUserSession } from "~/server/session.server";
 
-import { createUser, getUserByEmail } from "~/models/user.server";
+import {
+  createUser,
+  getUserByEmail,
+  UserRole,
+  UserStatus,
+} from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserId(request);
+  const userId = await getUserUUID(request);
   if (userId) return redirect("/");
   return json({});
 };
@@ -29,7 +34,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
+  const redirectTo = safeRedirect(formData.get("redirectTo"), "/notes");
 
   if (!validateEmail(email)) {
     return json<ActionData>(
@@ -60,11 +65,16 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const user = await createUser(email, password);
+  const user = await createUser(
+    email,
+    UserRole.User,
+    UserStatus.Unconfirmed,
+    password
+  );
 
   return createUserSession({
     request,
-    userId: user.id,
+    userId: user.uuid,
     remember: false,
     redirectTo,
   });

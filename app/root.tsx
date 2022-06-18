@@ -14,7 +14,7 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-import { getUser } from "./session.server";
+import { getUser } from "./server/session.server";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -47,7 +47,7 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
+        <LiveReload port={Number(process.env.REMIX_DEV_SERVER_WS_PORT)} />
       </body>
     </html>
   );

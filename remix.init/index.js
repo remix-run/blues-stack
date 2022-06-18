@@ -76,11 +76,10 @@ async function main({ rootDirectory }) {
     `
 Setup is almost complete. Follow these steps to finish initialization:
 
-- Start the database:
-  npm run docker
+- Install hasura cli if you didn't already
 
-- Run setup (this updates the database):
-  npm run setup
+- Start the database:
+  docker-compose up
 
 - Run the first build (this generates the server you will run):
   npm run build

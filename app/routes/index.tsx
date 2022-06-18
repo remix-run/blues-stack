@@ -9,23 +9,14 @@ export default function Index() {
       <div className="relative sm:pb-16 sm:pt-8">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
-            <div className="absolute inset-0">
-              <img
-                className="h-full w-full object-cover"
-                src="https://user-images.githubusercontent.com/1500684/158276320-c46b661b-8eff-4a4d-82c6-cf296c987a12.jpg"
-                alt="BB King playing blues on his Les Paul guitar"
-              />
-              <div className="absolute inset-0 bg-[color:rgba(27,167,254,0.5)] mix-blend-multiply" />
-            </div>
-            <div className="lg:pb-18 relative px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pt-32">
+            <div className="lg:pb-18 relative bg-gradient-to-t from-fuchsia-900 via-yellow-700 to-violet-500 px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pt-32">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-blue-500 drop-shadow-md">
-                  Blues Stack
+                <span className="block uppercase text-pink-400 drop-shadow-md">
+                  Prog Stack
                 </span>
               </h1>
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                Check the README.md file for instructions on how to get this
-                project deployed.
+                Blues Stack is brilliant. But I like this.
               </p>
               <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
                 {user ? (
@@ -77,10 +68,11 @@ export default function Index() {
                 href: "https://www.postgresql.org/",
               },
               {
-                src: "https://user-images.githubusercontent.com/1500684/157764484-ad64a21a-d7fb-47e3-8669-ec046da20c1f.svg",
-                alt: "Prisma",
-                href: "https://prisma.io",
+                src: "https://user-images.githubusercontent.com/2719615/174408578-202fdcbf-685a-4a0e-9836-0debbd3399b2.svg",
+                alt: "Hasura",
+                href: "https://hasura.io/",
               },
+
               {
                 src: "https://user-images.githubusercontent.com/1500684/157764276-a516a239-e377-4a20-b44a-0ac7b65c8c14.svg",
                 alt: "Tailwind",

@@ -17,7 +17,6 @@ Everything that [the Blues stack](https://github.com/remix-run/blues-stack) had 
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for deploy on merge to production and staging environments
 - Email/Password Authentication with [cookie-based sessions](https://remix.run/docs/en/v1/api/remix#createcookiesessionstorage)
-- Database ORM with [Prisma](https://prisma.io)
 - Styling with [Tailwind](https://tailwindcss.com/)
 - End-to-end testing with [Cypress](https://cypress.io)
 - Local third party request mocking with [MSW](https://mswjs.io)
@@ -28,18 +27,14 @@ Everything that [the Blues stack](https://github.com/remix-run/blues-stack) had 
 
 Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --template your/repo`! Make it your own.
 
-## Quickstart
-
-Click this button to create a [Gitpod](https://gitpod.io) workspace with the project set up, Postgres started, and Fly pre-installed
-
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/from-referrer/)
-
 ## Development
 
-- Start the Postgres Database in [Docker](https://www.docker.com/get-started):
+- Install [Hasura CLI](https://hasura.io/docs/latest/graphql/core/hasura-cli/install-hasura-cli/). It's available on npm.
+
+- Start [Docker services](https://www.docker.com/get-started):
 
   ```sh
-  npm run docker
+  docker compose up [-d] # -d if you don't care about logs
   ```
 
   > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
@@ -73,10 +68,10 @@ If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to conne
 
 ### Relevant code:
 
-This is a pretty simple note-taking app, but it's a good example of how you can build a full stack app with Prisma and Remix. The main functionality is creating users, logging in and out, and creating and deleting notes.
+This is a pretty simple note-taking app, but it's a good example of how you can build a full stack app with Hasura and Remix. The main functionality is creating users, logging in and out, and creating and deleting notes.
 
 - creating users, and logging in and out [./app/models/user.server.ts](./app/models/user.server.ts)
-- user sessions, and verifying them [./app/session.server.ts](./app/session.server.ts)
+- user sessions, and verifying them [./app/session.server.ts](app/server/session.server.ts)
 - creating, and deleting notes [./app/models/note.server.ts](./app/models/note.server.ts)
 
 ## Deployment
@@ -121,6 +116,12 @@ Prior to your first deployment, you'll need to do a few things:
   ```sh
   fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-prog-stack
   fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-prog-stack-staging
+
+
+  fly secrets set HASURA_GRAPHQL_DATABASE_URL="postgres://postgres:postgres@localhost:5432/postgres" --app remix-prog-stack
+  fly secrets set HASURA_GRAPHQL_ADMIN_SECRET="OurAdminSecret" --app remix-prog-stack
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app remix-prog-stack
+
   ```
 
   > **Note:** When creating the staging secret, you may get a warning from the Fly CLI that looks like this:

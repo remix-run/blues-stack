@@ -4,7 +4,37 @@ import compression from "compression";
 import morgan from "morgan";
 import { createRequestHandler } from "@remix-run/express";
 
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      DATABASE_URL: string;
+      SESSION_SECRET: string;
+      HASURA_URL: string;
+      HASURA_ADMIN_SECRET: string;
+      PORT?: string;
+    }
+  }
+}
+
 const app = express();
+const defDbUrl = "postgres://postgres:postgres@postgres:5432/postgres";
+const defSecret = "keyboardcat";
+
+process.env.DATABASE_URL = process.env.DATABASE_URL || defDbUrl;
+process.env.SESSION_SECRET = process.env.SESSION_SECRET || defSecret;
+process.env.HASURA_URL = process.env.HASURA_URL || "";
+process.env.HASURA_ADMIN_SECRET = process.env.HASURA_ADMIN_SECRET || "";
+
+if (process.env.SESSION_SECRET === defSecret) {
+  console.error(`
+⚠️  ⚠️  ⚠️
+
+Using default session secret.
+
+Did you forget to create the .env file?
+
+⚠️  ⚠️  ⚠️`);
+}
 
 app.use((req, res, next) => {
   // helpful headers:
