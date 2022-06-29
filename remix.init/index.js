@@ -20,6 +20,8 @@ async function main({ rootDirectory }) {
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
   const ENV_PATH = path.join(rootDirectory, ".env");
   const PACKAGE_JSON_PATH = path.join(rootDirectory, "package.json");
+  const PROJECT_JSON_PATH = path.join(rootDirectory, "project.json");
+  const NX_JSON_PATH = path.join(rootDirectory, "nx.json");
 
   const REPLACER = "blues-stack-template";
 
@@ -30,12 +32,15 @@ async function main({ rootDirectory }) {
     // get rid of anything that's not allowed in an app name
     .replace(/[^a-zA-Z0-9-_]/g, "-");
 
-  const [prodContent, readme, env, packageJson] = await Promise.all([
-    fs.readFile(FLY_TOML_PATH, "utf-8"),
-    fs.readFile(README_PATH, "utf-8"),
-    fs.readFile(EXAMPLE_ENV_PATH, "utf-8"),
-    fs.readFile(PACKAGE_JSON_PATH, "utf-8"),
-  ]);
+  const [prodContent, readme, env, packageJson, projectJson, nxJson] =
+    await Promise.all([
+      fs.readFile(FLY_TOML_PATH, "utf-8"),
+      fs.readFile(README_PATH, "utf-8"),
+      fs.readFile(EXAMPLE_ENV_PATH, "utf-8"),
+      fs.readFile(PACKAGE_JSON_PATH, "utf-8"),
+      fs.readFile(PROJECT_JSON_PATH, "utf-8"),
+      fs.readFile(NX_JSON_PATH, "utf-8"),
+    ]);
 
   const newEnv = env.replace(
     /^SESSION_SECRET=.*$/m,
@@ -57,11 +62,23 @@ async function main({ rootDirectory }) {
       2
     ) + "\n";
 
+  const newProjectJson = projectJson.replace(
+    new RegExp(escapeRegExp(REPLACER), "g"),
+    APP_NAME
+  );
+
+  const newNxJson = nxJson.replace(
+    new RegExp(escapeRegExp(REPLACER), "g"),
+    APP_NAME
+  );
+
   await Promise.all([
     fs.writeFile(FLY_TOML_PATH, toml.stringify(prodToml)),
     fs.writeFile(README_PATH, newReadme),
     fs.writeFile(ENV_PATH, newEnv),
     fs.writeFile(PACKAGE_JSON_PATH, newPackageJson),
+    fs.writeFile(PROJECT_JSON_PATH, newProjectJson),
+    fs.writeFile(NX_JSON_PATH, newNxJson),
     fs.copyFile(
       path.join(rootDirectory, "remix.init", "gitignore"),
       path.join(rootDirectory, ".gitignore")

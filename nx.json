@@ -1,0 +1,31 @@
+{
+  "extends": "nx/presets/core.json",
+  "npmScope": "remix",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build-all",
+          "validate-all",
+          "build:css",
+          "build:remix",
+          "build:server",
+          "typecheck",
+          "test:run",
+          "lint",
+          "test:e2e:run"
+        ]
+      }
+    }
+  },
+  "cli": {
+    "defaultProjectName": "blues-stack-template"
+  },
+  "pluginsConfig": {
+    "@nrwl/js": {
+      "analyzeSourceFiles": true,
+      "analyzePackageJson": true
+    }
+  }
+}

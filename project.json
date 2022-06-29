@@ -1,0 +1,121 @@
+{
+  "name": "blues-stack-template",
+  "targets": {
+    "dev-all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "nx dev:server blues-stack-template",
+            "prefix": "[SERVER]",
+            "color": "blue"
+          },
+          {
+            "command": "nx dev:build blues-stack-template",
+            "prefix": "[BUILD-]",
+            "color": "green"
+          },
+          {
+            "command": "nx dev:remix blues-stack-template",
+            "prefix": "[REMIX-]",
+            "color": "yellow"
+          },
+          {
+            "command": "nx dev:css blues-stack-template",
+            "prefix": "[CSS---]",
+            "color": "cyan"
+          }
+        ],
+        "__unparsed__": []
+      }
+    },
+    "validate-all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "nx test blues-stack-template --run",
+            "prefix": "[test-----]",
+            "color": "blue"
+          },
+          {
+            "command": "nx lint blues-stack-template",
+            "prefix": "[lint-----]",
+            "color": "green"
+          },
+          {
+            "command": "nx typecheck blues-stack-template",
+            "prefix": "[typecheck]",
+            "color": "yellow"
+          },
+          {
+            "command": "nx test:e2e:run blues-stack-template",
+            "prefix": "[e2e------]",
+            "color": "cyan"
+          }
+        ],
+        "__unparsed__": []
+      }
+    },
+    "build-all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "nx build:server blues-stack-template",
+            "prefix": "[SERVER]",
+            "color": "blue"
+          },
+          {
+            "command": "nx build:remix blues-stack-template",
+            "prefix": "[REMIX-]",
+            "color": "yellow"
+          }
+        ],
+        "__unparsed__": []
+      }
+    },
+    "build:remix": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "build:remix",
+        "__unparsed__": []
+      },
+      "outputs": ["/build/index.js", "/public/build"],
+      "dependsOn": ["build:css"]
+    },
+    "dev:build": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "dev:build",
+        "__unparsed__": []
+      },
+      "outputs": ["/build/server.js"]
+    },
+    "build:css": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "build:css",
+        "__unparsed__": []
+      },
+      "outputs": ["/app/styles/tailwind.css"]
+    },
+    "test:e2e:run": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "test:e2e:run",
+        "__unparsed__": []
+      },
+      "outputs": ["/cypress/screenshots", "/cypress/videos"],
+      "dependsOn": ["build-all"]
+    },
+    "test:e2e:dev": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "test:e2e:dev",
+        "__unparsed__": []
+      },
+      "dependsOn": ["build-all"]
+    }
+  }
+}
