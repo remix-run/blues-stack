@@ -102,6 +102,9 @@ jobs:
         with:
           useLockFile: false
 
+      - name: ⚙️ Build
+        run: npm run build
+
       - name: 🐳 Docker compose
         # the sleep is just there to give time for postgres to get started
         run: docker-compose up -d && sleep 3
@@ -110,9 +113,6 @@ jobs:
 
       - name: 🛠 Setup Database
         run: npx prisma migrate reset --force
-
-      - name: ⚙️ Build
-        run: npm run build
 
       - name: 🌳 Cypress run
         uses: cypress-io/github-action@v4
