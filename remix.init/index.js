@@ -2,92 +2,58 @@ const crypto = require("crypto");
 const fs = require("fs/promises");
 const path = require("path");
 
-const toml = require("@iarna/toml");
-const sort = require("sort-package-json");
-
-function escapeRegExp(string) {
-  // $& means the whole matched string
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
 function getRandomString(length) {
   return crypto.randomBytes(length).toString("hex");
 }
 
 async function main({ rootDirectory }) {
-  const README_PATH = path.join(rootDirectory, "README.md");
-  const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml");
-  const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
-  const ENV_PATH = path.join(rootDirectory, ".env");
-  const PACKAGE_JSON_PATH = path.join(rootDirectory, "package.json");
-  const PROJECT_JSON_PATH = path.join(rootDirectory, "project.json");
-  const NX_JSON_PATH = path.join(rootDirectory, "nx.json");
-
-  const REPLACER = "blues-stack-template";
-
-  const DIR_NAME = path.basename(rootDirectory);
-  const SUFFIX = getRandomString(2);
-
-  const APP_NAME = (DIR_NAME + "-" + SUFFIX)
+  const APP_NAME = path.basename(rootDirectory);
+  const APP_ID = (APP_NAME + "-" + getRandomString(2))
     // get rid of anything that's not allowed in an app name
     .replace(/[^a-zA-Z0-9-_]/g, "-");
 
-  const [prodContent, readme, env, packageJson, projectJson, nxJson] =
-    await Promise.all([
-      fs.readFile(FLY_TOML_PATH, "utf-8"),
-      fs.readFile(README_PATH, "utf-8"),
-      fs.readFile(EXAMPLE_ENV_PATH, "utf-8"),
-      fs.readFile(PACKAGE_JSON_PATH, "utf-8"),
-      fs.readFile(PROJECT_JSON_PATH, "utf-8"),
-      fs.readFile(NX_JSON_PATH, "utf-8"),
-    ]);
+  // copy files
+  const filesToCopy = [["remix.init/gitignore", ".gitignore"]];
+  for (const [from, to] of filesToCopy) {
+    await fs.copyFile(
+      path.join(rootDirectory, from),
+      path.join(rootDirectory, to)
+    );
+  }
 
+  // update env to have SESSION_SECRET
+  const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
+  const ENV_PATH = path.join(rootDirectory, ".env");
+  const env = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8");
   const newEnv = env.replace(
     /^SESSION_SECRET=.*$/m,
     `SESSION_SECRET="${getRandomString(16)}"`
   );
+  await fs.writeFile(ENV_PATH, newEnv);
 
-  const prodToml = toml.parse(prodContent);
-  prodToml.app = prodToml.app.replace(REPLACER, APP_NAME);
+  // delete files only needed for the template
+  const filesToDelete = [
+    ".github/ISSUE_TEMPLATE",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+  ];
+  for (const file of filesToDelete) {
+    await fs.rm(path.join(rootDirectory, file), { recursive: true });
+  }
 
-  const newReadme = readme.replace(
-    new RegExp(escapeRegExp(REPLACER), "g"),
-    APP_NAME
-  );
-
-  const newPackageJson =
-    JSON.stringify(
-      sort({ ...JSON.parse(packageJson), name: APP_NAME }),
-      null,
-      2
-    ) + "\n";
-
-  const newProjectJson = projectJson.replace(
-    new RegExp(escapeRegExp(REPLACER), "g"),
-    APP_NAME
-  );
-
-  const newNxJson = nxJson.replace(
-    new RegExp(escapeRegExp(REPLACER), "g"),
-    APP_NAME
-  );
-
-  await Promise.all([
-    fs.writeFile(FLY_TOML_PATH, toml.stringify(prodToml)),
-    fs.writeFile(README_PATH, newReadme),
-    fs.writeFile(ENV_PATH, newEnv),
-    fs.writeFile(PACKAGE_JSON_PATH, newPackageJson),
-    fs.writeFile(PROJECT_JSON_PATH, newProjectJson),
-    fs.writeFile(NX_JSON_PATH, newNxJson),
-    fs.copyFile(
-      path.join(rootDirectory, "remix.init", "gitignore"),
-      path.join(rootDirectory, ".gitignore")
-    ),
-    fs.rm(path.join(rootDirectory, ".github/ISSUE_TEMPLATE"), {
-      recursive: true,
-    }),
-    fs.rm(path.join(rootDirectory, ".github/PULL_REQUEST_TEMPLATE.md")),
-  ]);
+  // replace "blues-stack-template" in all files with the app name
+  const filesToReplaceIn = [
+    "README.md",
+    "package.json",
+    "fly.toml",
+    "project.json",
+    "nx.json",
+  ];
+  for (const file of filesToReplaceIn) {
+    const filePath = path.join(rootDirectory, file);
+    const contents = await fs.readFile(filePath, "utf-8");
+    const newContents = contents.replace(/blues-stack-template/g, APP_ID);
+    await fs.writeFile(filePath, newContents);
+  }
 
   console.log(
     `
