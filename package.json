@@ -14,7 +14,7 @@
     "dev:css": "cross-env NODE_ENV=development npm run generate:css -- --watch",
     "docker": "docker-compose up -d",
     "format": "prettier --write .",
-    "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
+    "generate:css": "tailwindcss -i ./app/styles/tailwind.css -o ./app/styles/tailwind-build.css",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
     "start": "cross-env NODE_ENV=production node ./build/server.js",
