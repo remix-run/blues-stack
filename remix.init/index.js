@@ -109,8 +109,6 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
     fs.rm(path.join(rootDirectory, ".github/PULL_REQUEST_TEMPLATE.md")),
   ]);
 
-  execSync(`npm run setup`, { stdio: "inherit", cwd: rootDirectory });
-
   execSync("npm run format -- --loglevel warn", {
     stdio: "inherit",
     cwd: rootDirectory,
