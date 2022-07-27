@@ -12,7 +12,7 @@ describe("smoke tests", () => {
     };
     cy.then(() => ({ email: loginForm.email })).as("user");
 
-    cy.visit("/");
+    cy.visitAndCheck("/");
     cy.findByRole("link", { name: /sign up/i }).click();
 
     cy.findByRole("textbox", { name: /email/i }).type(loginForm.email);
@@ -30,7 +30,7 @@ describe("smoke tests", () => {
       body: faker.lorem.sentences(1),
     };
     cy.login();
-    cy.visit("/");
+    cy.visitAndCheck("/");
 
     cy.findByRole("link", { name: /notes/i }).click();
     cy.findByText("No notes yet");
