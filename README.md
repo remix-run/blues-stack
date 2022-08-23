@@ -143,10 +143,10 @@ Prior to your first deployment, you'll need to do a few things:
 
   ```sh
   fly postgres create --name blues-stack-template-db
-  fly postgres attach --postgres-app blues-stack-template-db --app blues-stack-template
+  fly postgres attach --app blues-stack-template blues-stack-template-db
 
   fly postgres create --name blues-stack-template-staging-db
-  fly postgres attach --postgres-app blues-stack-template-staging-db --app blues-stack-template-staging
+  fly postgres attach --app blues-stack-template-staging blues-stack-template-staging-db
   ```
 
   > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
