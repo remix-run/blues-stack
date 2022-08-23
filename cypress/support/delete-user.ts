@@ -28,6 +28,8 @@ async function deleteUser(email: string) {
     } else {
       throw error;
     }
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
