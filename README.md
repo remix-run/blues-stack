@@ -1,6 +1,6 @@
 # Remix Chillwave Stack
 
-![The Remix Chillwave Stack](https://repository-images.githubusercontent.com/461012689/37d5bd8b-fa9c-4ab0-893c-f0a199d5012d)
+![The Remix Chillwave Stack](./chillwave-stack.jpg)
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
@@ -215,3 +215,7 @@ This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 ### Formatting
 
 We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
+
+### Attribution
+
+Photo by [Jeremy Bishop](https://unsplash.com/photos/KFIjzXYg1RM) on [Unsplash](https://unsplash.com/)
