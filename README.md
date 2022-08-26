@@ -5,7 +5,7 @@
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ```
-npx create-remix --template remix-run/chillwave
+npx create-remix --template sethdavis512/chillwave-stack
 ```
 
 ## What's in the stack
