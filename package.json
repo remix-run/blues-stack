@@ -30,7 +30,8 @@
   "eslintIgnore": [
     "/node_modules",
     "/build",
-    "/public/build"
+    "/public/build",
+    "/postgres-data"
   ],
   "dependencies": {
     "@prisma/client": "^4.2.1",
