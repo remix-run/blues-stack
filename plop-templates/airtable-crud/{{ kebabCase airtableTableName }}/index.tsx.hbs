@@ -1,0 +1,65 @@
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
+import type { Record } from "airtable";
+
+import base from "~/services/airtable.server";
+
+export const loader: LoaderFunction = async () => {
+  const records = await base("{{ airtableTableName }}")
+    .select({
+      view: "Grid view",
+    })  
+    .firstPage();
+
+  const {{ camelCase airtableTableName }} = records.map((record: Record<any>) => ({
+    id: record.id,
+    name: record.get('Name')
+    // Add record data
+  }));
+
+  return json({ {{ camelCase airtableTableName }} });
+};
+
+export default function {{ pascalCase airtableTableName }}Route() {
+  const data = useLoaderData();
+
+  return (
+    <>
+      <div className="my-8">
+        <Link className="underline" to="add">
+          Add a {{ titleCase airtableTableName }}
+        </Link>
+      </div>
+      <ul className="grid grid-cols-3 gap-4">
+        {data.{{ camelCase airtableTableName }}.map(
+          ({{ camelCase airtableTableName }}Data: { id: string; name: string }) => (
+            <li
+              className="mb-4 rounded-lg border border-gray-600 p-6"
+              key={
+                {{ camelCase airtableTableName }}Data.id
+              }
+            >
+              <ul className="flex h-full flex-col justify-between gap-8">
+                <li>
+                    { {{ camelCase airtableTableName }}Data.name }<br />
+                    <span className="rounded-lg text-xs bg-gray-200 p-2 text-gray-700">{ {{ camelCase airtableTableName }}Data.id }</span>
+                </li>
+                <li>
+                  <Link
+                    to={`/{{ camelCase airtableTableName }}/edit/${
+                        {{ camelCase airtableTableName }}Data.id}
+                    `}
+                    className="rounded-lg bg-slate-600 py-3 px-4 text-white"
+                  >
+                    Edit
+                  </Link>
+                </li>
+              </ul>
+            </li>
+          )
+        )}
+      </ul>
+    </>
+  );
+}
