@@ -1,0 +1,12 @@
+        <li>
+            <NavLink
+                to="/{{ kebabCase airtableTableName }}"
+                className={({ isActive }) =>
+                    `block border border-l border-r border-zinc-900 py-4 px-4 ${
+                        isActive && "bg-zinc-700 hover:bg-zinc-600"
+                    }`
+                }
+            >
+                {{ titleCase airtableTableName }}
+            </NavLink>
+        </li>

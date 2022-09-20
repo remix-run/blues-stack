@@ -1,10 +1,11 @@
 import { Outlet } from "@remix-run/react";
+import DefaultLayout from "~/components/DefaultLayout";
 
-export default function {{ pascalCase airtableTableName }}sRoute() {
+export default function {{ pascalCase airtableTableName }}Route() {
     return (
-        <div className="max-w-5xl mx-auto">
+        <DefaultLayout>
             <h1 className="text-4xl font-bold">{{ titleCase airtableTableName }}</h1>
             <Outlet />
-        </div>
+        </DefaultLayout>
     );
 }
