@@ -3,6 +3,7 @@ import express from "express";
 import compression from "compression";
 import morgan from "morgan";
 import { createRequestHandler } from "@remix-run/express";
+import { wrapExpressCreateRequestHandler } from "@sentry/remix";
 
 const app = express();
 
@@ -71,14 +72,16 @@ const BUILD_DIR = path.join(process.cwd(), "build");
 app.all(
   "*",
   MODE === "production"
-    ? createRequestHandler({ build: require(BUILD_DIR) })
+    ? wrapExpressCreateRequestHandler(
+        createRequestHandler({ build: require(BUILD_DIR) }) as any
+      )
     : (...args) => {
         purgeRequireCache();
         const requestHandler = createRequestHandler({
           build: require(BUILD_DIR),
           mode: MODE,
         });
-        return requestHandler(...args);
+        return wrapExpressCreateRequestHandler(requestHandler(...args) as any);
       }
 );
 
