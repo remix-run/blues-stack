@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "file:///Users/copods/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml",
+        "https://json.schemastore.org/github-workflow.json": "file:///Users/copods/projects/learn/blues-stack/.github/workflows/deploy.yml"
+    }
+}
