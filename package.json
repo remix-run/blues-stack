@@ -2,6 +2,7 @@
   "name": "blues-stack-template",
   "private": true,
   "sideEffects": false,
+  "version": "0.0.0-development",
   "scripts": {
     "build": "run-s build:*",
     "build:css": "npm run generate:css -- --minify",
@@ -84,6 +85,7 @@
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "prisma": "^4.3.1",
+    "semantic-release": "^19.0.5",
     "start-server-and-test": "^1.14.0",
     "tailwindcss": "^3.1.8",
     "ts-node": "^10.9.1",
