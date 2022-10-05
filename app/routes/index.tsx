@@ -2,6 +2,7 @@ import { Link } from "@remix-run/react";
 
 import { useOptionalUser } from "~/utils";
 import chillwaveHero from "../../chillwave-stack.jpg";
+import airtableLogo from "../images/airtable-logo.svg";
 
 export default function Index() {
   const user = useOptionalUser();
@@ -16,7 +17,7 @@ export default function Index() {
                 src={chillwaveHero}
                 alt="Sunglasses with chill polygonal mountains on the lenses"
               />
-              <div className="absolute inset-0  bg-gradient-to-br from-pink-500 to-yellow-500 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-500 to-yellow-500 mix-blend-multiply" />
             </div>
             <div className="relative px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pb-20 lg:pt-32">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
@@ -28,7 +29,7 @@ export default function Index() {
                 Check the README.md file for instructions on how to get this
                 project deployed.
               </p>
-              <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
+              <div className="mx-auto mt-10 mb-12 max-w-sm sm:flex sm:max-w-none sm:justify-center">
                 {user ? (
                   <Link
                     to="/dashboard"
@@ -53,13 +54,23 @@ export default function Index() {
                   </div>
                 )}
               </div>
-              <a href="https://remix.run">
-                <img
-                  src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
-                  alt="Remix"
-                  className="mx-auto mt-16 w-full max-w-[12rem] md:max-w-[16rem]"
-                />
-              </a>
+              <div className="mx-auto items-center gap-4 sm:flex sm:max-w-none sm:justify-center">
+                <a href="https://remix.run">
+                  <img
+                    src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
+                    alt="Remix logo"
+                    className="mx-auto w-full max-w-[12rem] md:max-w-[16rem]"
+                  />
+                </a>
+                <div className="text-4xl">+</div>
+                <a href="https://www.airtable.com">
+                  <img
+                    src={airtableLogo}
+                    alt="Airtable logo"
+                    className="mx-auto w-full max-w-[12rem] md:max-w-[16rem]"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
