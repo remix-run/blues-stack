@@ -43,8 +43,10 @@
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.18.1",
+    "express-prometheus-middleware": "^1.2.0",
     "isbot": "^3.5.3",
     "morgan": "^1.10.0",
+    "prom-client": "^14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tiny-invariant": "^1.2.0"
@@ -62,6 +64,7 @@
     "@types/compression": "^1.7.2",
     "@types/eslint": "^8.4.6",
     "@types/express": "^4.17.14",
+    "@types/express-prometheus-middleware": "^1.2.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",

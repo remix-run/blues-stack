@@ -6,6 +6,11 @@ processes = []
 
 [env]
   PORT = "8080"
+  METRICS_PORT = "8081"
+
+[metrics]
+  port = 8081
+  path = "/metrics"
 
 [deploy]
   release_command = "npx prisma migrate deploy"
