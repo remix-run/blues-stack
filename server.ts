@@ -6,6 +6,14 @@ import { createRequestHandler } from "@remix-run/express";
 import prom from "express-prometheus-middleware";
 
 const app = express();
+const metricsApp = express();
+app.use(
+  prom({
+    metricsPath: "/metrics",
+    collectDefaultMetrics: true,
+    metricsApp
+  })
+);
 
 app.use((req, res, next) => {
   // helpful headers:
@@ -91,15 +99,10 @@ app.listen(port, () => {
   console.log(`✅ app ready: http://localhost:${port}`);
 });
 
-const metrics = express();
+
 const metricsPort = process.env.METRICS_PORT || 3001;
-metrics.use(
-  prom({
-    metricsPath: "/metrics",
-    collectDefaultMetrics: true,
-  })
-);
-metrics.listen(metricsPort, () => {
+
+metricsApp.listen(metricsPort, () => {
   console.log(`✅ metrics ready: http://localhost:${metricsPort}/metrics`);
 });
 
