@@ -1,15 +1,17 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [citext]
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 model User {
   id    String @id @default(cuid())
-  email String @unique
+  email String @unique @db.Citext
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
