@@ -23,7 +23,7 @@
     "test:e2e:dev": "start-server-and-test dev http://localhost:3000 \"npx cypress open\"",
     "pretest:e2e:run": "npm run build",
     "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 \"npx cypress run\"",
-    "typecheck": "tsc && tsc cypress",
+    "typecheck": "tsc && tsc -p ./cypress",
     "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run"
   },
   "prettier": {},
@@ -62,6 +62,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.2",
+    "@types/cookie": "^0.5.1",
     "@types/eslint": "^8.4.10",
     "@types/express": "^4.17.15",
     "@types/express-prometheus-middleware": "^1.2.1",
