@@ -11,7 +11,7 @@ app.use(
   prom({
     metricsPath: "/metrics",
     collectDefaultMetrics: true,
-    metricsApp
+    metricsApp,
   })
 );
 
@@ -98,7 +98,6 @@ app.listen(port, () => {
   require(BUILD_DIR);
   console.log(`✅ app ready: http://localhost:${port}`);
 });
-
 
 const metricsPort = process.env.METRICS_PORT || 3001;
 
