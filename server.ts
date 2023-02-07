@@ -3,7 +3,7 @@ import express from "express";
 import compression from "compression";
 import morgan from "morgan";
 import { createRequestHandler } from "@remix-run/express";
-import prom from "express-prometheus-middleware";
+import prom from "@isaacs/express-prometheus-middleware";
 
 const app = express();
 const metricsApp = express();
