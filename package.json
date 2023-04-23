@@ -14,6 +14,7 @@
     "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config --require ./mocks ./build/server.js",
     "docker": "docker-compose up -d",
     "format": "prettier --write .",
+    "format:repo": "npm run format && npm run lint:repo -- --fix",
     "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "lint:repo": "npm run lint -- --config ./.eslintrc.repo.js",
