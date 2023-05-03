@@ -13,7 +13,7 @@ processes = []
   path = "/metrics"
 
 [deploy]
-  release_command = "npx prisma migrate deploy"
+  release_command = "bash ./scripts/migrate.sh"
 
 [experimental]
   allowed_public_ports = []
