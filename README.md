@@ -91,12 +91,6 @@ Prior to your first deployment, you'll need to do a few things:
 
 - [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
 
-- Make sure you're on version v0.0.474 or greater
-
-  ```sh
-  fly version
-  ```
-
 - Sign up and log in to Fly
 
   ```sh
