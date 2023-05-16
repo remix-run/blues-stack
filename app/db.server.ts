@@ -34,7 +34,7 @@ function getClient() {
   const isReadReplicaRegion = !PRIMARY_REGION || PRIMARY_REGION === FLY_REGION;
 
   if (!isLocalHost) {
-    if (databaseUrl.host.endsWith('.internal')) {
+    if (databaseUrl.host.endsWith(".internal")) {
       databaseUrl.host = `${FLY_REGION}.${databaseUrl.host}`;
     }
 
