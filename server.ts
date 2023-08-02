@@ -2,9 +2,14 @@ import path from "path";
 
 import prom from "@isaacs/express-prometheus-middleware";
 import { createRequestHandler } from "@remix-run/express";
+import { installGlobals } from "@remix-run/node";
 import compression from "compression";
 import express from "express";
 import morgan from "morgan";
+import sourceMapSupport from "source-map-support";
+
+sourceMapSupport.install();
+installGlobals();
 
 const app = express();
 const metricsApp = express();
