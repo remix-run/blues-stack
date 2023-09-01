@@ -3,7 +3,7 @@
 
 export const singleton = <Value>(
   name: string,
-  valueFactory: () => Value
+  valueFactory: () => Value,
 ): Value => {
   const g = global as any;
   g.__singletons ??= {};
