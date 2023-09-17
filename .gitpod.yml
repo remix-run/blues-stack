@@ -38,8 +38,8 @@ tasks:
       fi
 
   - name: Docker
-    init: docker-compose pull
-    command: docker-compose up
+    init: docker compose pull
+    command: docker compose up
 
   - init: npm install
     command: |
