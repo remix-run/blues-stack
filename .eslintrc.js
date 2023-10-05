@@ -1,5 +1,5 @@
 /**
- * This is intended to be a basic starting point for linting in the Indie Stack.
+ * This is intended to be a basic starting point for linting in the Blues Stack.
  * It relies on recommended configs out of the box for simplicity, but you can
  * and should modify this configuration to best suit your team's needs.
  */
