@@ -45,7 +45,12 @@ export function useMatchesData(
 }
 
 function isUser(user: unknown): user is User {
-  return user && typeof user === "object" && typeof user.email === "string";
+  return (
+    user != null &&
+    typeof user === "object" &&
+    "email" in user &&
+    typeof user.email === "string"
+  );
 }
 
 export function useOptionalUser(): User | undefined {
