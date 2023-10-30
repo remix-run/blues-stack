@@ -6,7 +6,6 @@ import prom from "@isaacs/express-prometheus-middleware";
 import { createRequestHandler } from "@remix-run/express";
 import type { ServerBuild } from "@remix-run/node";
 import { broadcastDevReady, installGlobals } from "@remix-run/node";
-import chokidar from "chokidar";
 import compression from "compression";
 import type { RequestHandler } from "express";
 import express from "express";
@@ -91,15 +90,17 @@ async function run() {
 
   app.use(morgan("tiny"));
 
-  app.all(
-    "*",
-    process.env.NODE_ENV === "development"
-      ? createDevRequestHandler(initialBuild)
-      : createRequestHandler({
-          build: initialBuild,
-          mode: process.env.NODE_ENV,
-        }),
-  );
+  app.all("*", async (...args) => {
+    const handler =
+      process.env.NODE_ENV === "development"
+        ? await createDevRequestHandler(initialBuild)
+        : createRequestHandler({
+            build: initialBuild,
+            mode: initialBuild.mode,
+          });
+
+    return handler(...args);
+  });
 
   const port = process.env.PORT || 3000;
   app.listen(port, () => {
@@ -133,7 +134,9 @@ async function run() {
     return import(BUILD_URL + "?t=" + stat.mtimeMs);
   }
 
-  function createDevRequestHandler(initialBuild: ServerBuild): RequestHandler {
+  async function createDevRequestHandler(
+    initialBuild: ServerBuild,
+  ): Promise<RequestHandler> {
     let build = initialBuild;
     async function handleServerUpdate() {
       // 1. re-import the server build
@@ -141,6 +144,7 @@ async function run() {
       // 2. tell Remix that this app server is now up-to-date and ready
       broadcastDevReady(build);
     }
+    const chokidar = await import("chokidar");
     chokidar
       .watch(VERSION_PATH, { ignoreInitial: true })
       .on("add", handleServerUpdate)
