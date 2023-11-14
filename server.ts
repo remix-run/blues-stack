@@ -90,17 +90,13 @@ async function run() {
 
   app.use(morgan("tiny"));
 
-  app.all("*", async (...args) => {
-    const handler =
-      process.env.NODE_ENV === "development"
-        ? await createDevRequestHandler(initialBuild)
-        : createRequestHandler({
-            build: initialBuild,
-            mode: initialBuild.mode,
-          });
-
-    return handler(...args);
-  });
+  app.all("*", process.env.NODE_ENV === "development"
+    ? await createDevRequestHandler(initialBuild)
+    : createRequestHandler({
+      build: initialBuild,
+      mode: initialBuild.mode,
+    })
+  );
 
   const port = process.env.PORT || 3000;
   app.listen(port, () => {
