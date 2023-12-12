@@ -8,7 +8,7 @@
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle --external:fsevents",
     "dev": "run-p dev:*",
     "dev:server": "cross-env NODE_ENV=development npm run build:server -- --watch",
-    "dev:remix": "remix dev --manual -c \"node --require ./mocks ./build/server.js\"",
+    "dev:remix": "remix dev --manual -c \"node --require ./mocks --watch-path ./build/server.js --watch ./build/server.js\"",
     "docker": "docker compose up -d",
     "format": "prettier --write .",
     "format:repo": "npm run format && npm run lint -- --fix",
