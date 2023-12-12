@@ -19,7 +19,15 @@ run();
 async function run() {
   const BUILD_PATH = path.resolve("build/index.js");
   const VERSION_PATH = path.resolve("build/version.txt");
+
   const initialBuild = await reimportServer();
+  const remixHandler =
+    process.env.NODE_ENV === "development"
+      ? await createDevRequestHandler(initialBuild)
+      : createRequestHandler({
+          build: initialBuild,
+          mode: initialBuild.mode,
+        });
 
   const app = express();
   const metricsApp = express();
@@ -90,17 +98,7 @@ async function run() {
 
   app.use(morgan("tiny"));
 
-  app.all("*", async (...args) => {
-    const handler =
-      process.env.NODE_ENV === "development"
-        ? await createDevRequestHandler(initialBuild)
-        : createRequestHandler({
-            build: initialBuild,
-            mode: initialBuild.mode,
-          });
-
-    return handler(...args);
-  });
+  app.all("*", remixHandler);
 
   const port = process.env.PORT || 3000;
   app.listen(port, () => {
