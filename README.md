@@ -10,8 +10,8 @@ npx create-remix@latest --template remix-run/blues-stack
 
 ## What's in the stack
 
-- [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
-- [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/getting-started/multi-region-databases/)
+- [Multi-region Fly app deployment](https://fly.io/docs/apps/scale-count/) with [Docker](https://www.docker.com/)
+- [Multi-region Fly PostgreSQL Cluster](https://fly.io/docs/postgres/advanced-guides/high-availability-and-global-replication/)
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for deploy on merge to production and staging environments
 - Email/Password Authentication with [cookie-based sessions](https://remix.run/utils/sessions#creatememorysessionstorage)
