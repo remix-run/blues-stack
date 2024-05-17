@@ -3,6 +3,7 @@ app = "blues-stack-template"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
+swap_size_mb = 512
 
 [env]
   PORT = "8080"
@@ -13,7 +14,7 @@ processes = []
   path = "/metrics"
 
 [deploy]
-  release_command = "bash ./scripts/migrate.sh"
+  release_command = "npx prisma migrate deploy"
 
 [experimental]
   allowed_public_ports = []
