@@ -8,6 +8,7 @@ swap_size_mb = 512
 [env]
   PORT = "8080"
   METRICS_PORT = "8081"
+  NODE_OPTIONS='--max-old-space-size=4096'
 
 [metrics]
   port = 8081
