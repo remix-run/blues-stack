@@ -131,7 +131,7 @@ async function run() {
         ? await viteDevServer.ssrLoadModule("virtual:remix/server-build")
         : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore - the file might not exist yet but it will
-          await import("../build/server/index.js");
+          await import("./build/server/index.js");
 
       return { build: build as unknown as ServerBuild, error: null };
     } catch (error) {

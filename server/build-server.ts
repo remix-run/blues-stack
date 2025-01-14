@@ -15,7 +15,7 @@ console.log("building...");
 esbuild
   .build({
     // note that we are not including dev-server.js since it's only used for development
-    entryPoints: [here("index.ts")],
+    entryPoints: [here("../server.ts")],
     outdir: here("../server-build"),
     target: [`node${pkg.engines.node}`],
     platform: "node",
