@@ -11,9 +11,9 @@ sourceMapSupport.install();
 installGlobals();
 run();
 
-const MODE = process.env.NODE_ENV;
-
 async function run() {
+  const MODE = process.env.NODE_ENV;
+
   const viteDevServer =
     MODE === "development"
       ? await import("vite").then((vite) =>
@@ -103,26 +103,41 @@ async function run() {
         serverBuild: getBuild(),
       }),
       mode: MODE,
-      build: getBuild,
+      build: async () => {
+        const { error, build } = await getBuild();
+        // gracefully "catch" the error
+        if (error) {
+          throw error;
+        }
+        return build;
+      },
     }),
   );
 
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 3024;
   app.listen(port, () => {
     console.log(`✅ app ready: http://localhost:${port}`);
   });
 
-  const metricsPort = process.env.METRICS_PORT || 3010;
+  const metricsPort = process.env.METRICS_PORT || 3014;
 
   metricsApp.listen(metricsPort, () => {
     console.log(`✅ metrics ready: http://localhost:${metricsPort}/metrics`);
   });
 
   async function getBuild() {
-    const build = viteDevServer
-      ? viteDevServer.ssrLoadModule("virtual:remix/server-build")
-      : await import("build/server/index.js");
-    // not sure how to make this happy 🤷‍♂️
-    return build as unknown as ServerBuild;
+    try {
+      const build = viteDevServer
+        ? await viteDevServer.ssrLoadModule("virtual:remix/server-build")
+        : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore - the file might not exist yet but it will
+          await import("../build/server/index.js");
+
+      return { build: build as unknown as ServerBuild, error: null };
+    } catch (error) {
+      // Catch error and return null to make express happy and avoid an unrecoverable crash
+      console.error("Error creating build:", error);
+      return { error: error, build: null as unknown as ServerBuild };
+    }
   }
 }
