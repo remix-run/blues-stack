@@ -114,12 +114,12 @@ async function run() {
     }),
   );
 
-  const port = process.env.PORT || 3024;
+  const port = process.env.PORT || 3000;
   app.listen(port, () => {
     console.log(`✅ app ready: http://localhost:${port}`);
   });
 
-  const metricsPort = process.env.METRICS_PORT || 3014;
+  const metricsPort = process.env.METRICS_PORT || 3010;
 
   metricsApp.listen(metricsPort, () => {
     console.log(`✅ metrics ready: http://localhost:${metricsPort}/metrics`);
