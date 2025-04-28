@@ -1,3 +1,9 @@
+> [!NOTE]  
+> This repo has been archived. Please refer instead to:
+> - The official [React Router templates](https://github.com/remix-run/react-router-templates/) for simple templates to get started with
+> - [The Epic Stack](https://github.com/epicweb-dev/epic-stack) for a more comprehensive, batteries-included option
+> - [Remix Discord](https://rmx.as/discord) to ask and share community templates
+
 # Remix Blues Stack
 
 ![The Remix Blues Stack](https://repository-images.githubusercontent.com/461012689/37d5bd8b-fa9c-4ab0-893c-f0a199d5012d)
